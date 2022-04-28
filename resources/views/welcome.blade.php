@@ -20,5 +20,6 @@
 </head>
 <body>
     <h1>Hola como estas!!!</h1>
+    <div id="example">Hola soy un componente c:</div>
 </body>
 </html>
