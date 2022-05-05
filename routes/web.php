@@ -23,3 +23,8 @@ Route::get('/admin', function () {
 Route::get('/user', function () {
     return view('user');
 });
+
+Route::prefix('auth')->group(function () {
+    Route::get('login',[LoginController::class, 'login'])->name('login.index');
+    Route::get('register',[LoginController::class, 'register'])->name('register.index');
+});
