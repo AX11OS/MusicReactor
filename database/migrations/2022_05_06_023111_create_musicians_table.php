@@ -15,7 +15,7 @@ class CreateMusiciansTable extends Migration
     {
         Schema::create('musicians', function (Blueprint $table) {
             $table->id();
-            $table->string('misicianName');
+            $table->string('musicianName');
             $table->string('middleName');
             $table->string('lastName');
             $table->timestamps();
