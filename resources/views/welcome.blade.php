@@ -3,5 +3,5 @@
 
 @section('content')
     <h1>Bienvenido a la pagina principal:Welcome</h1>
-    <div id="example"></div>
+    <div id="cisco"></div>
 @endsection

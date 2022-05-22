@@ -1,24 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter as Router, Route, NavLink, Routes } from "react-router-dom";
+import Welcome from "./Welcome";
+import Home from "./Home";
 
 function Cisco() {
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card" class="text-white bg-dark">
-                        <div className="card-header">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia totam iure voluptate dolorum accusamus sed cum inventore cupiditate dignissimos eos explicabo odit sit facilis veniam, quaerat blanditiis obcaecati id cumque?</div>
-
-                        <div className="card-body">I'm an example component!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div>
+        <Router>
+            <Routes>
+                <Route index element={<Welcome/>} />
+                <Route path="/Home/*" element={<Home/>} />
+            </Routes>
+        </Router>
+    </div>
     );
 }
 
-export default Example;
+export default Cisco;
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
+if (document.getElementById('cisco')) {
+    ReactDOM.render(<Cisco />, document.getElementById('cisco'));
 }

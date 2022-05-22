@@ -22,7 +22,7 @@
 </head>
 <body class="p-3 mb-2 bg-dark text-white">
     <header>
-        <div id="navbar"></div>
+        {{-- <div id="navbar"></div> --}}
     </header>
     @yield('content')
 </body>

@@ -12,5 +12,7 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
+require('./components/Cisco');
 require('./components/Navbar');
+require('./components/Welcome');
+require('./components/Home');
