@@ -1,22 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import * as ReactNavbar from "react-responsive-animate-navbar";
+import Home from './Home';
+import logo from '/images/image2vector.svg';
 function Navbar() {
     return (
-        <nav class="navbar navbar-expand-lg navbar-navbar navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="#">Features</a>
-                    <a class="nav-item nav-link" href="#">Pricing</a>
-                    <a class="nav-item nav-link disabled" href="#">Disabled</a>
-                </div>
-            </div>
-        </nav>
+        <ReactNavbar.ReactNavbar
+        color="rgb(25, 25, 25)"
+        logo={logo}
+        menu={[
+          { name: "HOME", to: "/"},
+          { name: "PLANES", to: "/planes" },
+          { name: "ACCEDE", to: "/login" },
+          { name: "REGÍSTRATE", to: "/signup" },
+        ]}
+        social={[
+          {
+            name: "Facebook",
+            url: "https://www.facebook.com",
+            icon: ["fab", "facebook-f"],
+          },
+          {
+            name: "Instagram",
+            url: "https://www.instagram.com",
+            icon: ["fab", "instagram"],
+          },
+        ]}
+      />
     );
 }
 
