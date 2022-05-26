@@ -4,9 +4,67 @@ body {
 
   @import url('https://fonts.googleapis.com/css?family=Open+Sans:600|Work+Sans:400,500,600,700&display=swap');
 
+  .card {
+    background-color: dodgerblue;
+    color: white;
+    padding: 1rem;
+    height: 4rem;
+  }
+  
+  .cards {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1rem;
+    margin-top: 20px;
+  }
+  
+  /* Screen larger than 600px? 2 column */
+  @media (min-width: 600px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  
+  /* Screen larger than 900px? 3 columns */
+  @media (min-width: 900px) {
+    .cards { grid-template-columns: repeat(3, 1fr); }
+  }
+
+.videoBlur{
+  filter: blur(15px);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  width: 100%;
+}
+.botonCerrar{
+  color: white;
+  border: 1px solid white;
+  border-color: white;
+  border-radius: 20px;
+} 
+.botonCerrar:hover{
+  cursor:pointer;
+  background-color: white;
+  color: black;
+} 
 #bodys{
   background: rgb(34,193,195);
-  background: linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+  background: linear-gradient(135deg, rgb(6, 8, 50) 0%,     rgb(0, 49, 91) 100%);
+  font-family: "work sans";
+}
+.botonbuscar{
+  background: rgba(0, 0, 0,0.0);
+  border-radius: 20px;
+  margin: 30px;
+  color: white;
+  border: 1px solid linear-gradient(90deg, rgb(106, 1, 89) 0%,     rgb(23, 130, 110) 100%);
+  border-color: linear-gradient(90deg, rgb(106, 1, 89) 0%,     rgb(23, 130, 110) 100%);
+  font-family: "work sans";
+}
+.fondoCliente{
+  background: rgb(0, 0, 0);
+  background: linear-gradient(90deg, rgb(6, 8, 50) 0%,     rgb(0, 49, 91) 100%);
   font-family: "work sans";
 }
 #fullwindow{
@@ -86,7 +144,7 @@ html{
   color: white;
   font-weight: 700;
   background: rgb(34,193,195);
-  background: linear-gradient(90deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+  background: linear-gradient(90deg, rgb(9, 0, 49) 0%,     rgb(0, 41, 137) 100%);
   border: 0px;
   cursor: pointer;
   transition: opacity 0.25s ease-out;
