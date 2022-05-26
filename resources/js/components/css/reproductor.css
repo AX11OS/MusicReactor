@@ -1,0 +1,144 @@
+.avatar, .avatar1{
+    padding-top: 10px;
+    left: auto;
+    right: auto;
+    width: 100px;
+    height:100px;
+  }
+  .container {
+    height: max-content;
+    width: 100vw;
+    flex-direction: row;
+    background-color: #000;
+
+  }
+  .playerContaier{
+    width: 100%;
+    min-height: 200px;
+    background-color: white;
+    border-radius: 35px 35px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 75px 0 30px 0;
+    margin-top: 130px;
+    border-radius: 30px;
+  }
+  .controls{
+    width: 100%;
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    margin: 0;
+    color: white;
+  }
+  .options{
+    display: flex;
+    align-items:center;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 50px;
+    color: white;
+  }
+  .opt{
+    border: none;
+    background-color: transparent;
+    font-size: 25px;  
+    height:30px;
+    width:30px;
+    border-radius:50%;
+    padding: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 0.4s;
+  }
+  .opt:hover{
+    cursor:pointer;
+    box-shadow: 3px 3px 5px #ffffff, -3px 0px 5px #ffffff;
+    color: #147CC0;
+  }
+  .controlButton{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color:white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    transition: box-shadow 0.4s;
+  }
+
+  .centerButton{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    border: 2px solid #FFF;
+    color: white;
+    transition: box-shadow 0.5s;
+  }
+  .controlButton:hover{
+    box-shadow: 3px 3px 5px #ffffff, -3px 0px 5px #ffffff;
+  }
+  
+
+  .name{
+    margin-top: 27px;
+    margin-bottom: 10px;
+    width:100%;
+    text-align:left;
+    color: white;
+    font-size: 15px;
+  }
+  .progress{
+    margin: 5px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .progressCenter{
+    width: 280px;
+    height: 7px;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+  }
+  
+  .progressCenter:hover{
+    cursor: pointer;
+  }
+  
+  .progressBar{
+    width: 0px;
+    height: 7px;
+    border-radius: 10px;
+    background-color: #63ADD0;
+  }
+  .title{
+    margin-top: 0;
+    margin-bottom: 5px;
+    width:100%;
+    text-align:left;
+    color: white;
+    font-size: 20px;
+  }  
+  .controls{
+    width: 100%;
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    margin: 0;
+  }

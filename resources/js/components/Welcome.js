@@ -20,7 +20,7 @@ function Welcome() {
     const navigate = useNavigate();
     useEffect(() => {
         setTimeout(() => {
-          navigate('/Home');
+          navigate('/HomePanel');
         }, 1500)
       }, [])
     return (

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as ReactNavbar from "react-responsive-animate-navbar";
 import Home from './Home';
 import logo from '/images/image2vector.svg';
+import SignUp from './SignUp';
 function Navbar() {
     return (
         <ReactNavbar.ReactNavbar
@@ -10,9 +11,9 @@ function Navbar() {
         logo={logo}
         menu={[
           { name: "HOME", to: "/"},
-          { name: "PLANES", to: "/planes" },
-          { name: "ACCEDE", to: "/login" },
-          { name: "REGÍSTRATE", to: "/signup" },
+          { name: "PLANES", to: "/#/HomePanel/planes" },
+          { name: "ACCEDE", to: "/#/HomePanel/Login" },
+          { name: "REGÍSTRATE", to: "/#/HomePanel/SignUp"},
         ]}
         social={[
           {
