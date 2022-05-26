@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAlbumsTable extends Migration
+class CreateInvoicelinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateAlbumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('invoicelines', function (Blueprint $table) {
             $table->id();
-            $table->string('Title');
-            $table->unsignedBigInteger('ArtistId');
+            $table->unsignedBigInteger('InvoiceId');
+            $table->unsignedBigInteger('TrackId');
+            $table->double('UnitPrice');
+            $table->integer('Quantity');
         });
     }
 
@@ -27,6 +29,6 @@ class CreateAlbumsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('albums');
+        Schema::dropIfExists('invoicelines');
     }
 }
