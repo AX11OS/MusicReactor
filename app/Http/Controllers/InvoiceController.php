@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Musician;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
-class MusicianController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class MusicianController extends Controller
      */
     public function index()
     {
-        $musician = Musician::all();
-        return ($musician);
+        $invoice = Invoice::all();
+        return ($invoice);
     }
 
     /**
@@ -25,7 +25,7 @@ class MusicianController extends Controller
      */
     public function create()
     {
-        //llamar al formulario para capturar los valores a insertar
+        //
     }
 
     /**
@@ -36,12 +36,7 @@ class MusicianController extends Controller
      */
     public function store(Request $request)
     {
-        $musician = new Musician();
-        $musician->musicianName = $request->musicianName;
-        $musician->middleName = $request->middleName;
-        $musician->lastName = $request->lastName;
-        $musician->save();
-        return $musician; 
+        //
     }
 
     /**
@@ -52,8 +47,7 @@ class MusicianController extends Controller
      */
     public function show($id)
     {
-        $musician = Musician::find($id);
-        return ($musician);
+        //
     }
 
     /**

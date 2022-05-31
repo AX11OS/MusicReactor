@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\Artist;
 use Illuminate\Http\Request;
 
-class AlbumController extends Controller
+class ArtistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        $album = Album::orderBy('id','Desc')->get();
-        return ($album);
+        $artist = Artist::all();
+        return ($artist);
     }
 
     /**
@@ -36,10 +37,10 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        $album = new Album();
-        $album->title = $request->title;
+        $album = new Artist();
+        $album->name = $request->name;
         $album->save();
-        return redirect()->route('album.show',$album);
+        return redirect()->route('Artist.show',$album);
     }
 
     /**
@@ -48,9 +49,9 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Album $album)
+    public function show(Artist $artist)
     {
-        return ($album);
+        return ($artist);
     }
 
     /**
@@ -59,9 +60,9 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Album $album)
+    public function edit($id)
     {
-        return (view("AlbumEdit",compact('album')));
+        //
     }
 
     /**
@@ -73,7 +74,7 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return ("Update");
+        //
     }
 
     /**
@@ -84,6 +85,6 @@ class AlbumController extends Controller
      */
     public function destroy($id)
     {
-        return ("Formulario de destroy");
+        //
     }
 }
