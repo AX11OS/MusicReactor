@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Song;
+use App\Models\Mediatype;
 use Illuminate\Http\Request;
 
-class SongController extends Controller
+class MediatypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class SongController extends Controller
      */
     public function index()
     {
-        $song = Song::all();
-        return ($song);
+        $mediatype = Mediatype::all();
+        return ($mediatype);
     }
 
     /**
@@ -25,7 +25,7 @@ class SongController extends Controller
      */
     public function create()
     {
-        //llamar al formulario para capturar los valores a insertar
+        //
     }
 
     /**
@@ -36,13 +36,7 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
-        $song = new Song();
-        $song->songName = $request->songName;
-        $song->misicianId = $request->misicianId;
-        $song->albumId = $request->albumId;
-        $song->genderId = $request->genderId;
-        $song->save();
-        return $song; 
+        //
     }
 
     /**
@@ -53,8 +47,7 @@ class SongController extends Controller
      */
     public function show($id)
     {
-        $song = Song::find($id);
-        return ($song);
+        //
     }
 
     /**

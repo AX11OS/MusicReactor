@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gender;
+use App\Models\Playlisttrack;
 use Illuminate\Http\Request;
 
-class GenderController extends Controller
+class PlaylisttrackController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class GenderController extends Controller
      */
     public function index()
     {
-        $gender = Gender::all();
-        return ($gender);
+        $playlisttrack = Playlisttrack::all();
+        return ($playlisttrack);
     }
 
     /**
@@ -25,7 +25,7 @@ class GenderController extends Controller
      */
     public function create()
     {
-        //llamar al formulario para capturar los valores a insertar
+        //
     }
 
     /**
@@ -36,10 +36,7 @@ class GenderController extends Controller
      */
     public function store(Request $request)
     {
-        $gender = new Gender();
-        $gender->genderName = $request->genderName;
-        $gender->save();
-        return $gender; 
+        //
     }
 
     /**
@@ -50,8 +47,7 @@ class GenderController extends Controller
      */
     public function show($id)
     {
-        $gender = Gender::find($id);
-        return ($gender);
+        //
     }
 
     /**
