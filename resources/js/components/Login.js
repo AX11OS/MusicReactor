@@ -2,7 +2,11 @@ export default function Login() {
     return(
         <div id="loginform">
           <h2 id="headerTitle">Iniciar Sesión</h2>
-          <Form />
+          <div>
+            <FormInput description="Username" placeholder="Correo Electrónico" type="text" />
+            <FormInput description="Password" placeholder="Contraseña" type="password"/>
+            <FormButton title="Log in"/>
+        </div>
           <OtherMethods />
         </div>
     );

@@ -19,6 +19,6 @@ class Album extends Model
         'nombre',
         'cover',
         'anio',
-        'id_banda'
+        'id_artista'
     ];
 }

@@ -1,18 +1,11 @@
 import React,{useState, useEffect, useMemo } from 'react';
-import ReactDOM from 'react-dom';
 import { useSpring, animated } from 'react-spring';
-import {Award, Search} from 'react-bootstrap-icons';
 import {useNavigate} from 'react-router-dom';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
-import countryList from 'react-select-country-list';
 import Select from 'react-select';
 import { FileUploader } from "react-drag-drop-files";
 import './css/botonchido.css';
-import { useAlert } from "react-alert";
-import AlertTemplate from 'react-alert-template-basic';
-import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 function Text() {
@@ -23,34 +16,45 @@ function Text() {
     })
   return <div>
           <animated.div style={styles}>
-              Agregar Artista
+              Agregar Album
           </animated.div>
       </div>
 }
 
-function ArtistasCrear() {
+export default function AlbumsCrear() {
   const navigate = useNavigate();
-  const options = useMemo(() => countryList().getData(), [])
+  const [options, setOptions] = useState([]);
   const [nombre, setNombre] = useState('');
-  const [descripcion, setDescripcion] = useState('');
-  const [logo, setLogo] = useState(null);
-  const [banda, setBanda] = useState(null);
-  const [pais, setPais] = useState('');
-  const [URLbanda, setURLBanda] = useState('./images/Splash1.png');
-  const [URLlogo, setURLlogo] = useState('./images/image2vector.svg');
+  const [cover, setCover] = useState(null);
+  const [idBanda, setidBanda] = useState('');
+  const [anio, setAnio] = useState('');
+  const [years, setYears] = useState([]);
+  const [URLcover, setURLcover] = useState('./images/image2vector.svg');
   const MySwal = withReactContent(Swal)
   
   const changeHandler = value => {
-    setPais(value);
+    setidBanda(value);
     console.log(value);
   }
-  const inputProps = {
-      inputStyle: 'box',
-      labelStyle: 'stacked',
-      placeholder: 'Please select...'
-  };
+
   const fileTypes = ["JPG", "PNG"];
-  useEffect(() => {}, []);
+  useEffect(() => { consultaArtistas()
+  }, []);
+
+  const consultaArtistas = async () => {
+    var url = 'http://localhost:8000/api/artistas';
+    await axios.get(url).then(({data})=>{
+        if(data && data.length >0){
+          data.map(i =>{
+            setOptions(old => [...old, {value: i.id, label: <div><img src={`./storage/artistas/logo/${i.logo}`} style={{width: 50, left: 5,height: 50, borderRadius: 50}}/>{i.nombre} </div>}])
+          })
+        }
+    })
+    for(var x = 2022; x > 1800; x--){
+      setYears(old => [...old, {value: x, label: x}])
+    }
+  }
+
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
@@ -60,7 +64,24 @@ function ArtistasCrear() {
       padding: 20,
     }),
     control: () => ({
-     placeholder: 'País de orígen'
+     placeholder: 'Related Artist'
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+      return { ...provided, opacity, transition };
+    }
+  }
+  const customStyles2 = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dotted white',
+      color: state.isSelected ? 'black' : 'white',
+      backgroundColor: state.isSelected ? 'white' : 'black',
+      padding: 20,
+    }),
+    control: () => ({
+     placeholder: 'Related Artist'
     }),
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
@@ -69,23 +90,24 @@ function ArtistasCrear() {
     }
   }
 
-  const agregarArtista = async (e) => {
+  const agregarAlbum = async (e) => {
     e.preventDefault();
-    if(nombre == '' || pais.label == '' || descripcion == '' || banda == null || logo == null){
+    if(nombre == '' || idBanda == '' || anio == '' || cover == null){
       MySwal.fire(
-        'Campos incompletos',
-        'Requieres llenar todos los campos',
+        'Incomplete Fields',
+        'You must to fill all fields',
         'question'
       )
       console.log("no");
     }else{
       const formData = new FormData();
+      console.log(idBanda.label)
+      formData.append('_method', 'PATCH');
       formData.append('nombre', nombre)
-      formData.append('pais', pais.label)
-      formData.append('descripcion', descripcion)
-      formData.append('banda', banda)
-      formData.append('logo', logo)
-      var url = 'http://localhost:8000/api/artistas';
+      if(cover!= null) formData.append('cover', cover)
+      formData.append('anio', anio.value)
+      formData.append('id_artista', idBanda.value)
+      var url = 'http://localhost:8000/api/albums';
       
       await axios.post(url, formData).then(({data})=>{
         MySwal.fire({
@@ -103,7 +125,7 @@ function ArtistasCrear() {
             no-repeat
           `
         })
-        navigate('/PanelAdmin/Artistas/');
+        navigate('/PanelAdmin/Albums/');
       }).catch(({response})=>{
         if(response.status===422){
           setValidationError(response.data.errors)
@@ -131,40 +153,31 @@ function ArtistasCrear() {
       <div style={{fontSize: 50, color: 'white', zIndex:1, paddingTop: 25, paddingLeft: 250}}>
         <Text/>
       </div>
-      <Form style={{flexDirection: 'row', display: 'flex'}} onSubmit={agregarArtista}>
+      <Form style={{flexDirection: 'row', display: 'flex'}} onSubmit={agregarAlbum}>
         <div>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="text" onChange={(e)=> setNombre(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Nombre del artista" />
+            <Form.Group className="mb-3" >
+              <Form.Control type="text" onChange={(e)=> setNombre(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Nombre del álbum" />
             </Form.Group>
 
             <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
-              <Select options={options} placeholder="País de orígen" styles={customStyles} value={pais}  onChange={changeHandler} />
+              <Select options={options} placeholder="Related artist" styles={customStyles} value={idBanda}  onChange={changeHandler} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control as="textarea" rows="3" value={descripcion} onChange={(e)=> setDescripcion(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center', height: 200, fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Reseña" />
+            <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
+              <Select options={years} placeholder="Year" styles={customStyles2} value={anio}  onChange={(value)=> setAnio(value)} />
             </Form.Group>
-        </div>
-        <div style={{marginLeft: 20, alignContent: 'center'}}>
-          <Form.Group className="mb-3">
-            <FileUploader label={"Imagen del artista"} hoverTitle ={'Soltar aquí'} handleChange={(file) => { setBanda(file), setURLBanda(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
-          </Form.Group>
-          <Form.Group>
-            <img style={{width: 430, height:333, backgroundColor: 'rgba(0,0,0,0.7)', border:'2px solid white'}} src={URLbanda}></img>
-          </Form.Group>
-          <Button className='glow-on-hover' type="submit">
+            <Button className='glow-on-hover' type="submit">
               Guardar datos
             </Button>
         </div>
-        <div style={{marginLeft: 20}}>
+        <div style={{marginLeft: 20, alignContent: 'center'}}>
           <Form.Group className="mb-3">
-            <FileUploader label={"Logo del artista"} hoverTitle ={'Soltar aquí'} handleChange={(file) =>  {setLogo(file), setURLlogo(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
+            <FileUploader label={"Album cover"} hoverTitle ={'Drop here'} handleChange={(file) => { setCover(file), setURLcover(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
           </Form.Group>
           <Form.Group>
-            <img style={{width: 333, height:333, backgroundColor: 'rgba(0,0,0,0.7)', border:'2px solid white'}} src={URLlogo}></img>
+            <img style={{width: 400, height:400, backgroundColor: 'rgba(0,0,0,0.7)', border:'2px solid white'}} src={URLcover}></img>
           </Form.Group>
         </div>
-
       </Form>
 
       <div>
@@ -176,11 +189,5 @@ function ArtistasCrear() {
     </div>
 
   );
-}
-
-export default ArtistasCrear;
-
-if (document.getElementById('artistascrear')) {
-    ReactDOM.render(<ArtistasCrear />, document.getElementById('artistascrear'));
 }
 

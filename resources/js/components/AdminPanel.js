@@ -4,6 +4,9 @@ import AdminNavBar from './AdminNavbar'
 import ArtistasConsultar from './ArtistasConsultar';
 import ArtistasCrear from './ArtistasCrear';
 import ArtistasEditar from './ArtistasEditar';
+import AlbumsConsultar from './AlbumsConsultar';
+import AlbumsCrear from './AlbumsCrear';
+import AlbumsEditar from './AlbumsEditar';
 
 export default function AdminPanel(){
     return(
@@ -28,7 +31,18 @@ export default function AdminPanel(){
                         path='/Artistas/Editar/:id'
                         element={<ArtistasEditar/>}
                     />
-                    
+                    <Route
+                        path='/Albums/'
+                        element={<AlbumsConsultar/>}
+                    />
+                    <Route
+                        path='/Albums/Crear/'
+                        element={<AlbumsCrear/>}
+                    />
+                    <Route
+                        path='/Albums/Editar/:id'
+                        element={<AlbumsEditar/>}
+                    />
                 </Routes>
             </div>
         </div>

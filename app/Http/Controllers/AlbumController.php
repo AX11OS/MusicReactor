@@ -20,7 +20,7 @@ class AlbumController extends Controller
     }
 
     public function albumartista(){
-        $album = DB::table('albums')
+        $album = \DB::table('albums')
         ->join('artistas', 'artistas.id','=','albums.id_artista')
         ->select('artistas.nombre as banda', 'albums.*')
         ->get();
@@ -31,7 +31,7 @@ class AlbumController extends Controller
         try{
             $imagenalbum = Str::random().'.'.$request->cover->getClientOriginalExtension();
             Storage::disk('public')->putFileAs('albums/cover', $request->cover,$imagenalbum);
-            Album::create($request->post()+['cover'=>$imagenbanda]);
+            Album::create($request->post()+['cover'=>$imagenalbum]);
             return response()->json(['res'=>'Album agregado'],200);
 
         }catch(\Exception $error){

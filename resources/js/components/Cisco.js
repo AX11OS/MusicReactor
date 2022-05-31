@@ -6,6 +6,7 @@ import HomePanel from "./HomePanel";
 import PanelUsuario from './PanelUsuario';
 import AdminPanel from './AdminPanel';
 import './css/app.css'
+import Login from './Login';
 function Cisco() {
     return (
         <div className="fullwindow">
@@ -13,6 +14,7 @@ function Cisco() {
                 <Routes>
                     <Route index element={<Welcome/>} />
                     <Route path="/HomePanel/*" element={<HomePanel/>} />
+                    <Route path="/Login/*" element={<Login/>} />
                     <Route path="/PanelUsuario/*" element={<PanelUsuario/>} />
                     <Route path="/PanelAdmin/*" element={<AdminPanel/>} />
                 </Routes>

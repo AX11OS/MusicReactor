@@ -12,7 +12,7 @@ function Navbar() {
         menu={[
           { name: "HOME", to: "/"},
           { name: "PLANES", to: "/#/HomePanel/planes" },
-          { name: "ACCEDE", to: "/#/HomePanel/Login" },
+          { name: "ACCEDE", to: "/#/Login" },
           { name: "REGÍSTRATE", to: "/#/HomePanel/SignUp"},
         ]}
         social={[

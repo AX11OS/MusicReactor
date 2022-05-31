@@ -15,7 +15,7 @@ Route::resource('artistas', ArtistaController::class);
 Route::resource('albums', AlbumController::class);
 
 //Consultas específicas
-Route::get('albumartista',[ArtistaController::class, 'albumartista']);
+Route::get('albumartista',[AlbumController::class, 'albumartista']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
