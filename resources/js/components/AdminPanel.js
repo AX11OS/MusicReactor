@@ -1,8 +1,9 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import AdminNavBar from './AdminNavbar'
-import AdminArtistas from './AdminArtistas';
-
+import ArtistasConsultar from './ArtistasConsultar';
+import ArtistasCrear from './ArtistasCrear';
+import ArtistasEditar from './ArtistasEditar';
 
 export default function AdminPanel(){
     return(
@@ -17,8 +18,17 @@ export default function AdminPanel(){
                 <Routes>
                     <Route
                         path='/Artistas'
-                        element={<AdminArtistas/>}
+                        element={<ArtistasConsultar/>}
                     />
+                    <Route
+                        path='/Artistas/Crear'
+                        element={<ArtistasCrear/>}
+                    />
+                    <Route
+                        path='/Artistas/Editar/:id'
+                        element={<ArtistasEditar/>}
+                    />
+                    
                 </Routes>
             </div>
         </div>

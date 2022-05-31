@@ -8,11 +8,11 @@ function Navbar() {
         color="rgb(25, 25, 25)"
         logo={logo}
         menu={[
-          { name: "Panel", to: "/"},
-          { name: "Géneros", to: "/#/Admin/Generos" },
-          { name: "Artistas", to: "/#/Admin/Artistas"},
-          { name: "Álbumes", to: "/#/Admin/Albums" },
-          { name: "Canciones", to: "/#/Admin/Canciones" },
+          { name: "Panel", to: "/#/PanelAdmin"},
+          { name: "Géneros", to: "/#/PanelAdmin/Generos" },
+          { name: "Artistas", to: "/#/PanelAdmin/Artistas"},
+          { name: "Álbumes", to: "/#/PanelAdmin/Albums" },
+          { name: "Canciones", to: "/#/PanelAdmin/Canciones" },
         ]}
         social={[
         ]}
