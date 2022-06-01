@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 
 
@@ -34,7 +35,7 @@ export default function ClienteInicio(){
     return(
         <div>
             <div style={{fontSize: 30, color: 'white', paddingLeft: 20}}>
-                {(recientes[0]!=null)? <div><Text/><Recomendar/></div>: <Recomendar></Recomendar> }
+                {(recientes.length>0 && recientes)? <div><Text/><Recomendar/></div>: <Recomendar></Recomendar> }
             </div>
         </div>
     );

@@ -16,72 +16,7 @@ import {
 } from "react-bootstrap-icons";
 import './css/reproductor.css';
 
-const tracks = [
-        {
-          name: "Mekanın Sahibi",
-          artist: "Norm Ender",
-          cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/1.jpg",
-          source: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/1.mp3",
-          url: "https://www.youtube.com/watch?v=z3wAjJXbYzA",
-          favorited: false
-        },
-        {
-          name: "Everybody Knows",
-          artist: "Leonard Cohen",
-          cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/2.jpg",
-          source: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/2.mp3",
-          url: "https://www.youtube.com/watch?v=Lin-a2lTelg",
-          favorited: true
-        },
-        {
-          name: "Extreme Ways",
-          artist: "Moby",
-          cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/3.jpg",
-          source: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/3.mp3",
-          url: "https://www.youtube.com/watch?v=ICjyAe9S54c",
-          favorited: false
-        },
-        {
-          name: "Butterflies",
-          artist: "Sia",
-          cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/4.jpg",
-          source: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/4.mp3",
-          url: "https://www.youtube.com/watch?v=kYgGwWYOd9Y",
-          favorited: false
-        },
-        {
-          name: "The Final Victory",
-          artist: "Haggard",
-          cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/5.jpg",
-          source: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/5.mp3",
-          url: "https://www.youtube.com/watch?v=0WlpALnQdN8",
-          favorited: true
-        },
-        {
-          name: "Genius ft. Sia, Diplo, Labrinth",
-          artist: "LSD",
-          cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/6.jpg",
-          source: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/6.mp3",
-          url: "https://www.youtube.com/watch?v=HhoATZ1Imtw",
-          favorited: false
-        },
-        {
-          name: "The Comeback Kid",
-          artist: "Lindi Ortega",
-          cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/7.jpg",
-          source: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/7.mp3",
-          url: "https://www.youtube.com/watch?v=me6aoX0wCV8",
-          favorited: true
-        },
-        {
-          name: "Overdose",
-          artist: "Grandson",
-          cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/8.jpg",
-          source: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/8.mp3",
-          url: "https://www.youtube.com/watch?v=00-Rl3Jlx-o",
-          favorited: false
-        },
-        {
+const tracks = [{
           name: "Rag'n'Bone Man",
           artist: "Human",
           cover: "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/9.jpg",
@@ -125,10 +60,6 @@ function Options (props){
     setFav(tracks[props.idx].favorited)
   }
 
-  function openURL(){
-    window.open(tracks[props.idx].url, "_blank")
-  }
-  
   return(
     <div className="options">
       {
@@ -141,9 +72,6 @@ function Options (props){
           <Shuffle/>
         </button>
       }
-      <button className="opt" onClick={openURL}>
-        <BoxArrowUpRight/>
-      </button>
       {
         fav &&
       <button onClick={favorite}  className="opt" style={{color: '#147CC0'}}>
@@ -258,24 +186,16 @@ function Progress(props){
   );
 }
 
-function Avatar(props){ 
-  return(
-    <div style={{display: 'flex'}}>
-      <img src={tracks[props.idx].cover} className="avatar"/>
-        <div style={{flexDirection: 'column'}}>
-        <h4 className="name">{tracks[props.idx].artist}</h4>
-        <h1 className="title">{tracks[props.idx].name}</h1>
-      </div>
-    </div>
-  );
-}
+export default function Reproductor({newCore}) {
+  const [tracks, setTracks] = useState([]);
 
-
-export default function Reproductor() {
   let [idx, setIdx] = useState(0);
   let [playState, setPlayState] = useState(false);
   let oldIdx = useRef(idx)
+
+  const player = new Audio(newCore.core[newCore.index].source)
   useEffect(() => {
+    setTracks(newCore.core)
     if(playState === true)
       player.play()
     else
@@ -293,7 +213,15 @@ export default function Reproductor() {
   return (
     <div>
         <div className='container' style={{display: 'flex'}}>
-          <Avatar idx={idx}/>
+
+          <div style={{display: 'flex'}}>
+            <img src={tracks[idx].cover} className="avatar"/>
+            <div style={{flexDirection: 'column'}}>
+            <h4 className="name">{tracks[idx].artist}</h4>
+            <h1 className="title">{tracks[idx].name}</h1>
+          </div>
+
+        </div>
           <div style={{flexDirection: 'column', alignContent:'center'}}>
             <Control 
               setIdx={setIdx} 
@@ -301,8 +229,8 @@ export default function Reproductor() {
               playState={playState} 
               setPlayState={setPlayState}/>
               <Progress 
-              setIdx={setIdx} 
-              idx={idx} 
+                setIdx={setIdx} 
+                idx={idx} 
               />
           </div>
           <Options 

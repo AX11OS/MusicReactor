@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import Welcome from "./Welcome";
 import HomePanel from "./HomePanel";
-import PanelUsuario from './PanelUsuario';
+import Client from './Client';
 import AdminPanel from './AdminPanel';
 import './css/app.css'
 import Login from './Login';
@@ -15,7 +15,7 @@ function Cisco() {
                     <Route index element={<Welcome/>} />
                     <Route path="/HomePanel/*" element={<HomePanel/>} />
                     <Route path="/Login/*" element={<Login/>} />
-                    <Route path="/PanelUsuario/*" element={<PanelUsuario/>} />
+                    <Route path="/Client/*" element={<Client/>} />
                     <Route path="/PanelAdmin/*" element={<AdminPanel/>} />
                 </Routes>
             </Router>

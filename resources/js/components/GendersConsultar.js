@@ -5,10 +5,8 @@ import {Award, Search} from 'react-bootstrap-icons';
 import {useNavigate, Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import Button from 'react-bootstrap/Button'
 import './css/botonchido.css';
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal)
@@ -27,7 +25,7 @@ function Text() {
 }
 
 
-function GendersConsultar() {
+export default function GendersConsultar() {
   const navigate = useNavigate();
   const [artistas, setArtistas] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -123,9 +121,4 @@ function GendersConsultar() {
   );
 }
 
-export default GendersConsultar;
-
-if (document.getElementById('gendersconsultar')) {
-    ReactDOM.render(<GendersConsultar />, document.getElementById('gendersconsultar'));
-}
 
