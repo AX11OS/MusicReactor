@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Gender extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
+    public $table = "genders";
     protected $fillable = [
+        'id',
         'name',
     ];
 }

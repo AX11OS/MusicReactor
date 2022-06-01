@@ -18,7 +18,27 @@ body {
     grid-gap: 1rem;
     margin-top: 20px;
   }
-  
+  .modal-backdrop {
+    background-color: black;
+    color:  white;
+
+  }
+  .modal-backdrop:before {
+    content: '';
+    background: linear-gradient(45deg, #000000, #400068, #00025a, #6e007f, #00352c, #000d4c, #cb27d0, #009dff, #500000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
   /* Screen larger than 600px? 2 column */
   @media (min-width: 600px) {
     .cards { grid-template-columns: repeat(2, 1fr); }

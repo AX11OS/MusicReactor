@@ -11,12 +11,15 @@ use Illuminate\Database\Eloquent\Model;
 class Song extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    public $timestamps = false;
+    public $table = "artists";
     protected $fillable = [
-        'songName',
-        'misicianId',
-        'albumId',
-        'genderId',
+        'id',
+        'name',
+        'id_artist',
+        'id_album',
+        'id_gender',
+        'duration'
     ];
 
     protected $casts = [

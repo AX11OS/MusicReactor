@@ -7,7 +7,7 @@ import ArtistasEditar from './ArtistasEditar';
 import GendersConsultar from './GendersConsultar';
 import GendersCrear from './GendersCrear';
 import GendersEditar from './GendersEditar';
-
+import SongsCreate from './SongsCreate';
 export default function AdminPanel(){
     return(
         <div>
@@ -38,6 +38,18 @@ export default function AdminPanel(){
                     <Route
                         path='/Genders/Crear'
                         element={<GendersCrear/>}
+                    />
+                    <Route
+                        path='/Genders/Editar/:id'
+                        element={<GendersEditar/>}
+                    />
+                    <Route
+                        path='/Genders'
+                        element={<GendersConsultar/>}
+                    />
+                    <Route
+                        path='/Songs/Create'
+                        element={<SongsCreate/>}
                     />
                     <Route
                         path='/Genders/Editar/:id'
