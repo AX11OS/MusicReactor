@@ -4,9 +4,9 @@ import AdminNavBar from './AdminNavbar'
 import ArtistasConsultar from './ArtistasConsultar';
 import ArtistasCrear from './ArtistasCrear';
 import ArtistasEditar from './ArtistasEditar';
-import AlbumsConsultar from './AlbumsConsultar';
-import AlbumsCrear from './AlbumsCrear';
-import AlbumsEditar from './AlbumsEditar';
+import GendersConsultar from './GendersConsultar';
+import GendersCrear from './GendersCrear';
+import GendersEditar from './GendersEditar';
 
 export default function AdminPanel(){
     return(
@@ -32,16 +32,16 @@ export default function AdminPanel(){
                         element={<ArtistasEditar/>}
                     />
                     <Route
-                        path='/Albums/'
-                        element={<AlbumsConsultar/>}
+                        path='/Genders'
+                        element={<GendersConsultar/>}
                     />
                     <Route
-                        path='/Albums/Crear/'
-                        element={<AlbumsCrear/>}
+                        path='/Genders/Crear'
+                        element={<GendersCrear/>}
                     />
                     <Route
-                        path='/Albums/Editar/:id'
-                        element={<AlbumsEditar/>}
+                        path='/Genders/Editar/:id'
+                        element={<GendersEditar/>}
                     />
                 </Routes>
             </div>
