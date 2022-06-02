@@ -3,11 +3,21 @@ import react, {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle, faPauseCircle, faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 export default function Player({idx, core, updatePlay, isPlay}){
-    const [player, setPlayer] =useState (new Audio)
+    const player = new Audio();
     useEffect(()=>{
-
+        control()
     },[])
+    const control = ()=>{
+        if(core.length>0){
+            player.src = `./storage/songs/audio/${core[idx].source}`;
+            console.log("Vale!")
+            if(isPlay)
+                player.play();
+            else
+                player.pause();
+        }
 
+    }
     return(
         <div style={{backgroundColor: 'black', width: '100wv', heigth: 190}}>
             <div >
@@ -31,7 +41,7 @@ export default function Player({idx, core, updatePlay, isPlay}){
                             <button><FontAwesomeIcon icon={faBackward} /></button>
                         </div>
                         <div>
-                            <button onClick={()=> (isPlay)? updatePlay(false):updatePlay(true)}><FontAwesomeIcon icon={(isPlay)? faPauseCircle: faPlayCircle} /></button>
+                            <button onClick={()=> {(isPlay)? updatePlay(false):updatePlay(true), control()}}><FontAwesomeIcon icon={(isPlay)? faPauseCircle: faPlayCircle} /></button>
                         </div>
                         <div>
                             <button><FontAwesomeIcon icon={faForward} /></button>
