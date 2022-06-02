@@ -35,6 +35,14 @@ class AlbumController extends Controller
         return $album;
     }
 
+    public function loadalbums($request){
+        $album = \DB::table('albums')
+        ->select('albums.*')
+        ->where('albums.id_artista','=',$request)
+        ->get();
+        return $album;
+    }
+
     public function store(Request $request)
     {
         try{

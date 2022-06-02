@@ -188,12 +188,11 @@ function Progress(props){
 
 export default function Reproductor(newCore) {
   const [tracks, setTracks] = useState([]);
-  const player = new Audio();
 
   let [idx, setIdx] = useState(0);
   let [playState, setPlayState] = useState(false);
   let oldIdx = useRef(idx)
-
+  
 
   useEffect(() => {
     setTracks(newCore.core)

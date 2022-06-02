@@ -22,8 +22,11 @@ Route::get('allofsongs',[SongsController::class, 'allofsongs']);
 Route::get('loadalbum/{id}',[AlbumController::class, 'loadalbum']);
 Route::get('loadsong/{id}',[SongsController::class, 'loadsong']);
 Route::get('userplay/{id}',[PlaylistController::class, 'userplay']);
-
-
+Route::get('addfavorite/{id}',[PlaylistController::class, 'addfavorite']);
+Route::get('loadfromartist/{id}',[SongsController::class, 'loadfromartist']);
+Route::get('loadalbums/{id}',[AlbumController::class, 'loadalbums']);
+Route::get('searchsongs/{id}',[SongsController::class, 'searchsongs']);
+Route::get('searchartists/{id}',[ArtistaController::class, 'searchartists']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

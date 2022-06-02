@@ -34,6 +34,10 @@ class PlaylistController extends Controller
         }
     }
 
+    public function addFavorite($request){
+        Playlist::where('id', $request)
+            ->update(['favorite' => 1]);
+    }
     public function userplay($request)
     {
         try{

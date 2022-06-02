@@ -54,6 +54,51 @@ class SongsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function searchsongs($request){
+        try{
+            $songs = \DB::table('songs')
+            ->join('artistas', 'artistas.id','=','songs.id_artist')
+            ->join('albums', 'albums.id','=','songs.id_album')
+            ->select('artistas.nombre as artist', 
+            'albums.id as idalbum',
+            'songs.name as name', 
+            'songs.id as idsong',
+            'albums.cover as cover',
+            'albums.nombre as albumname',
+            'songs.song as source')
+            ->where('songs.name','like','%'.$request.'%')
+            ->orderBy('songs.name')
+            ->get();
+            return $songs;
+
+        }catch(\Exception $error){
+            return response()->json(['res'=>$error->getMessage()],500);
+        }
+    }
+
+    public function loadfromartist($request){
+        try{
+            $songs = \DB::table('playlists')
+            ->join('songs', 'songs.id','=','playlists.id_song')
+            ->join('artistas', 'artistas.id','=','songs.id_artist')
+            ->join('albums', 'albums.id','=','songs.id_album')
+            ->select('artistas.nombre as artist', 
+            'albums.id as idalbum',
+            'playlists.id as idplay',
+            'songs.name as name', 
+            'albums.cover as cover',
+            'albums.nombre as albumname',
+            'songs.song as source')
+            ->where('songs.id_artist','=',$request)
+            ->orderBy('songs.name')
+            ->get();
+            return $songs;
+
+        }catch(\Exception $error){
+            return response()->json(['res'=>$error->getMessage()],500);
+        }
+    }
+
     public function store(Request $request)
     {
         try{

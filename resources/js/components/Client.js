@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useRef} from 'react';
 import Reproductor from './Reproductor';
 import NavBarCliente from './NavBarCliente';
 import NavBarClienteTop from './NavBarClienteTop';
@@ -7,7 +7,9 @@ import {Routes, Route} from 'react-router-dom';
 import ClientFavs from './ClientFavs';
 import ClientPlaylist from './ClientPlaylist';
 import Player from './Player';
-
+import ClientArtist from './ClientArtist';
+import ClientSearch from './ClientSearch'
+import { useParams } from 'react-router-dom';
 export default function Client(){
     const [core, setCore] = useState([]);
     const [idx, setIndex] = useState(0);
@@ -41,8 +43,11 @@ export default function Client(){
                         <Routes>
                             <Route index element={<ClienteInicio/>}/>
                             <Route 
-                                path='/Favorites/'
-                                element={<ClientFavs updateCore = {updateCore}  />}/>
+                                path='/Artist/:id'
+                                element={<ClientArtist updateCore = {updateCore} updateIndex = {updateIndex} updatePlay={updatePlay} isPlay={isPlay}  />}/>
+                            <Route 
+                                path='/Search/:search'
+                                element={<ClientSearch updateCore = {updateCore} updateIndex = {updateIndex} updatePlay={updatePlay} isPlay={isPlay}  />}/>
                             <Route 
                                 path='/Playlist/'
                                 element={<ClientPlaylist updateCore = {updateCore} updateIndex = {updateIndex} updatePlay={updatePlay} isPlay={isPlay}/>}/>
@@ -51,8 +56,8 @@ export default function Client(){
                 </div>
 
             </div>
-            <div>
-                <Player core={core} idx={idx} updatePlay={updatePlay} isPlay={isPlay}/>
+            <div style={{position: 'absolute', bottom: 0, left:0, right:0}}>
+                <Player core={core} idx={idx} updatePlay={updatePlay} isPlay={isPlay}  updateIndex={updateIndex}/>
             </div>
         </div>
     );

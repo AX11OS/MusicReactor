@@ -23,16 +23,10 @@ export const NavBarClienteDatos = [
         path: "/Client/Playlist",
         icon: <IoIcons.IoIosPaper />,
         cName: "sub-nav",
-      },
-      {
-        title: "My Favorites",
-        path: "/Client/Favorites",
-        icon: <IoIcons.IoMdHeart />,
-        cName: "sub-nav",
-      },
+      }
     ],
   },
-  {
+ /* {
     title: "Discover",
     path: "/Client/Discover",
     icon: <FaIcons.FaNewspaper />,
@@ -41,5 +35,5 @@ export const NavBarClienteDatos = [
     title: "Genres",
     path: "/Client/Genres",
     icon: <FaIcons.FaMusic />,
-  },
+  },*/
 ]

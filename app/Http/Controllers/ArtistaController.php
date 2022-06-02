@@ -73,7 +73,13 @@ class ArtistaController extends Controller
             return response()->json(['res'=>'Errormáster '.$error->message],500);
         }
     }
-
+    public function searchartists($request){
+        $result = \DB::table('artistas')
+        ->select('artistas.*')
+        ->where('artistas.nombre','like','%'.$request.'%')
+        ->get();
+        return $result;
+    }
     public function destroy(Artista $artista)
     {
         try {

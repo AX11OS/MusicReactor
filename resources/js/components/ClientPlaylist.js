@@ -8,6 +8,8 @@ import Lottie from 'react-lottie';
 import * as pause from './anims/pause.json';
 import * as play from './anims/play.json';
 import * as bars from './anims/bars.json';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content'
 
 function Text() {
     const styles = useSpring({
@@ -37,7 +39,8 @@ function Text() {
 export default function ClientPlaylist({updateCore, updateIndex, updatePlay, isPlay}){
     const [playlist, setPlaylist] = useState([]);
     const [onPlay, setOnPlay] = useState();
-
+    const MySwal = withReactContent(Swal)
+    
     useEffect(() => {
         loadplay()
       }, []);
