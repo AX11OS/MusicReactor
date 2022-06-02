@@ -12,7 +12,7 @@ function Text() {
       })
     return <div>
             <animated.div style={styles}>
-                Escuchados recientemente
+                Recently listened to.
             </animated.div>
         </div>
   }
@@ -24,7 +24,7 @@ function Text() {
       })
     return <div>
             <animated.div style={styles}>
-                Search a Reaction for you!
+                Recommended for you.
             </animated.div>
         </div>
   }
