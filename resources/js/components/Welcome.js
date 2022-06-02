@@ -7,11 +7,11 @@ function Text() {
     const styles = useSpring({
         from: { opacity: "0" },
         to: { opacity: "1" },
-        config: { duration: "1000" }
+        config: { duration: "3000" }
       })
     return <div style={{alignItems: 'center', alignContent: 'center', justifyContent: 'center'}}>
             <animated.div style={styles}>
-            <img style={{height: '90vh', width: '72vw', sizeMode: 'cover'}} src={'/images/Splash1.png'}/>
+            <img style={{height: '100vh', width: '100vw', sizeMode: 'cover'}} src={'/images/image2vector.svg'}/>
         </animated.div>
         </div>
   }

@@ -14,7 +14,7 @@ export default function Player({idx, core, updatePlay, isPlay, updateIndex}){
     useEffect(()=>{
         control()
     },[isPlay,idx])
-
+    const uid = localStorage.getItem('_id');
     let [currLength, setCurrLength] = useState(0)
     let [length, setLength] = useState(0)
     const progressBar = document.querySelector('.progressBar')
@@ -64,14 +64,17 @@ export default function Player({idx, core, updatePlay, isPlay, updateIndex}){
         }
         updatePlay(false)
         player.current.src = `./storage/songs/audio/${core[idx].source}`
-        player.current.pause()
         player.current.load()
         player.current.play()
     }
 
     const add = async(idxx)=>{
-        var url = 'http://localhost:8000/api/addfavorite/';
-        await axios.get(url+idxx).then(({data})=>{
+        const formData = new FormData();
+        formData.append('id_client', uid)
+        formData.append('id_song', idxx)
+        formData.append('favorite', 0)
+        var url = 'http://localhost:8000/api/playlists/';
+        await axios.get(url, formData).then(({data})=>{
             MySwal.fire({
                 title: 'Added to favorites',
                 width: 600,
@@ -174,7 +177,7 @@ export default function Player({idx, core, updatePlay, isPlay, updateIndex}){
                     </div>  
                 </div>
                 </div>
-                : console.log('porno')
+                : console.log('YESSSS')
                 }
 
             </div>

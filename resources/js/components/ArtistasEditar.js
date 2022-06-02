@@ -23,7 +23,7 @@ function Text() {
     })
   return <div>
           <animated.div style={styles}>
-              Agregar Artista
+              Edit Artist
           </animated.div>
       </div>
 }
@@ -97,8 +97,8 @@ function ArtistasEditar() {
     e.preventDefault();
     if(nombre == '' || pais.label == '' || descripcion == ''){
       MySwal.fire(
-        'Campos incompletos',
-        'Requieres llenar todos los campos',
+        'Incomplete form',
+        'Please, fill all the form!',
         'question'
       )
       console.log("no");
@@ -168,23 +168,23 @@ function ArtistasEditar() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control as="textarea" rows="3" value={descripcion} onChange={(e)=> setDescripcion(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center', height: 200, fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Reseña" />
+              <Form.Control as="textarea" rows="3" value={descripcion} onChange={(e)=> setDescripcion(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center', height: 200, fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Info" />
             </Form.Group>
         </div>
         <div style={{marginLeft: 20, alignContent: 'center'}}>
           <Form.Group className="mb-3">
-            <FileUploader label={"Imagen del artista"} hoverTitle ={'Soltar aquí'} handleChange={(file) => { setBanda(file), setURLBanda(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
+            <FileUploader label={"Artist Image"} hoverTitle ={'Drop here'} handleChange={(file) => { setBanda(file), setURLBanda(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
           </Form.Group>
           <Form.Group>
             <img style={{width: 430, height:333, backgroundColor: 'rgba(0,0,0,0.7)', border:'2px solid white'}} src={URLbanda}></img>
           </Form.Group>
           <Button className='glow-on-hover' type="submit">
-              Guardar datos
+              Update
             </Button>
         </div>
         <div style={{marginLeft: 20}}>
           <Form.Group className="mb-3">
-            <FileUploader label={"Logo del artista"} hoverTitle ={'Soltar aquí'} handleChange={(file) =>  {setLogo(file), setURLlogo(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
+            <FileUploader label={"Artist Logo"} hoverTitle ={'Drop here'} handleChange={(file) =>  {setLogo(file), setURLlogo(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
           </Form.Group>
           <Form.Group>
             <img style={{width: 333, height:333, backgroundColor: 'rgba(0,0,0,0.7)', border:'2px solid white'}} src={URLlogo}></img>

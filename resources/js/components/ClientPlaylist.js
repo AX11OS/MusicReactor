@@ -40,17 +40,50 @@ export default function ClientPlaylist({updateCore, updateIndex, updatePlay, isP
     const [playlist, setPlaylist] = useState([]);
     const [onPlay, setOnPlay] = useState();
     const MySwal = withReactContent(Swal)
-    
+    const uid = localStorage.getItem('_id');
     useEffect(() => {
         loadplay()
       }, []);
     
       const loadplay = async () => {
-        var url = 'http://localhost:8000/api/userplay/3';
+        var url = 'http://localhost:8000/api/userplay/'+uid;
         await axios.get(url).then(({data})=>{
             setPlaylist(data)
         })
       }
+      const borrar = async (_idplay)=>{
+        const url = `http://localhost:8000/api/playlists/${_idplay}`;
+        await axios.delete(url).then(({data})=>{
+          MySwal.fire({
+            title: 'The song was deleted from your playlist',
+            position: 'top-end',
+            width: 600,
+            padding: '3em',
+            color: '#FFF',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500,
+            background: '#000000',
+            
+          })
+          oadplay()
+        }).catch(({response:{data}})=>{
+          console.log("NOOOO");
+          MySwal.fire({
+            title: 'Error: ' + response ,
+            position: 'top-end',
+            width: 600,
+            padding: '3em',
+            color: '#FFF',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500,
+            background: '#000000',
+            
+          })
+        })
+      }
+
       const barsOptions = {
         loop: true,
         autoplay: true, 
@@ -79,7 +112,7 @@ export default function ClientPlaylist({updateCore, updateIndex, updatePlay, isP
                             <Td>{i.albumname}</Td>
                             <Td>{i.artistname}</Td>
                             <Td>{(onPlay==index && isPlay ) ?<Lottie className = "bars" options={barsOptions} height={30} width={30}/>: <div style={{width: 50, height: 50}}></div> }</Td>
-                            <Td><button className="btn-6" onClick={()=>borrar(i.idsong)}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon></button></Td>
+                            <Td><button className="btn-6" onClick={()=>borrar(i.idplay)}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon></button></Td>
                         </Tr>)
                         
                         })

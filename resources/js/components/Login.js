@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Form, Container, Row, Button, Navbar, Col, Nav, Image, ButtonGroup, Alert } from 'react-bootstrap';
+import { Form, Container, Row, Button, Col, Nav, Image, ButtonGroup, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import Axios from 'axios';
 import swal from 'sweetalert';
-import * as ReactNavbar from "react-responsive-animate-navbar";
+import NavBar from './Navbar';
 import logo from '/images/image2vector.svg';
 import './css/app.css'
 const Login = () => {
@@ -51,8 +51,14 @@ const Login = () => {
             text: "You are already logged in!!",
             icon: 'success',
           });
-          navigate('/Client/', { state: { token: response.data.token, email: data.email } });
+          console.log(response.data.id);
           console.log(response.data.token);
+          localStorage.setItem('_id',response.data.id);
+          var access =  console.log(response.data.access);
+          if(access== "no")
+            navigate('/Client/');
+          else
+            navigate('/PanelAdmin/Artists');
         }
       })
       .catch(error => {
@@ -66,28 +72,7 @@ const Login = () => {
   return (
     <>
       <div>
-        <div><ReactNavbar.ReactNavbar
-        color="rgb(25, 25, 25)"
-        logo={logo}
-        menu={[
-          { name: "HOME", to: "/"},
-          { name: "PLANS", to: "/#/HomePanel/planes" },
-          { name: "LOGIN", to: "/#/Login" },
-          { name: "SIGNUP", to: "/#/SignUp"},
-        ]}
-        social={[
-          {
-            name: "Facebook",
-            url: "https://www.facebook.com",
-            icon: ["fab", "facebook-f"],
-          },
-          {
-            name: "Instagram",
-            url: "https://www.instagram.com",
-            icon: ["fab", "instagram"],
-          },
-        ]}
-      /></div>
+        <NavBar></NavBar>
         <div>
           <section className=" text-center text-lg-start bgimage-1">
             <div className="container-fluid">

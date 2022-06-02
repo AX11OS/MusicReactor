@@ -10,6 +10,7 @@ import 'react-notifications/lib/notifications.css';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal)
+import randomColor from "randomcolor";
 
 function Text() {
   const styles = useSpring({
@@ -19,7 +20,7 @@ function Text() {
     })
   return <div>
           <animated.div style={styles}>
-              Artistas
+              Genders
           </animated.div>
       </div>
 }
@@ -35,7 +36,7 @@ export default function GendersConsultar() {
   }, []);
 
   const consultaArtistas = async () => {
-    var url = 'http://localhost:8000/api/artistas';
+    var url = 'http://localhost:8000/api/genders';
     await axios.get(url).then(({data})=>{
         setArtistas(data)
     })
@@ -43,25 +44,26 @@ export default function GendersConsultar() {
 
   const Card=(props)=>{
     console.log("Props : " + props.nombre);
+    let color = randomColor();
+    console.log(color);
     return(
-      <div style={{textAlign: 'center', color: 'white', alignContent: 'center', maxWidth:'100px'}}>
-        <img style ={{maxWidth: '100px', width: '100%', height: 'auto', borderRadius:50}} src ={`./storage/artistas/logo/${props.logo}`}/>
+      <div style={{textAlign: 'center', color: 'white', alignContent: 'center', maxWidth:'100px',borderRadius: 50, backgroundColor: color}}>
         <p>{props.nombre}</p>
         <div style = {{top: -10}}>
-          <button className='btn-5'><Link  to={`/PanelAdmin/Artistas/Editar/${props.idartista}`} style={{color: 'white'}}> <FontAwesomeIcon icon={faEdit} /></Link></button>
+          <button className='btn-5'><Link  to={`/PanelAdmin/Genders/Editar/${props.idgender}`} style={{color: 'white'}}> <FontAwesomeIcon icon={faEdit} /></Link></button>
           {'   '}
-          <button className='btn-6' onClick={()=> borrar(props.idartista)}> <FontAwesomeIcon icon={faTrash}/></button>
+          <button className='btn-6' onClick={()=> borrar(props.idgender)}> <FontAwesomeIcon icon={faTrash}/></button>
         </div>
       </div>
     );
   }
   
 
-  const borrar = async (_idartista)=>{
-    const url = `http://localhost:8000/api/artistas/${_idartista}`;
+  const borrar = async (_idGender)=>{
+    const url = `http://localhost:8000/api/genders/${_idGender}`;
     await axios.delete(url).then(({data})=>{
       MySwal.fire({
-        title: 'Borrado exitoso',
+        title: 'Deleted! OwO',
         position: 'top-end',
         width: 600,
         padding: '3em',
@@ -76,7 +78,7 @@ export default function GendersConsultar() {
     }).catch(({response:{data}})=>{
       console.log("NOOOO");
       MySwal.fire({
-        title: 'Error al borrar: ' + response ,
+        title: 'Error while deleting: ' + response ,
         position: 'top-end',
         width: 600,
         padding: '3em',
@@ -98,23 +100,23 @@ export default function GendersConsultar() {
       {(artistas && artistas.length > 0)?<div>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           <div>
-            <button onClick={()=> navigate('/PanelAdmin/Artistas/Crear')} className='glow-on-hover' style = {{left: 1000}}><Award/>Agregar nuevo artista</button>
+            <button onClick={()=> navigate('/PanelAdmin/Genders/Crear')} className='glow-on-hover' style = {{left: 1000}}><Award/>Add new gender</button>
           </div>
           <div>
-            <input type='text' placeholder="🔎 Buscar" value={searchValue} onChange={e => setSearchValue(e.target.value)} style={{backgroundColor: 'rgba(0,0,0,0.0)', color: 'white', fontSize: 30, right: 50,border: '0px solid black'}}></input>
+            <input type='text' placeholder="🔎 Search" value={searchValue} onChange={e => setSearchValue(e.target.value)} style={{backgroundColor: 'rgba(0,0,0,0.0)', color: 'white', fontSize: 30, right: 50,border: '0px solid black'}}></input>
           </div>
         </div>
         <div className="cards">
           {
             artistas
-            .filter(i => i.nombre.match(new RegExp(searchValue, "i")))
+            .filter(i => i.Name.match(new RegExp(searchValue, "i")))
             .map((i,k)=>{
-              console.log(i.nombre);
-              return <Card key = {k} nombre={i.nombre} logo = {i.logo} idartista ={i.id}/>
+              console.log(i.Name);
+              return <Card key = {k} nombre={i.Name}  idgender ={i.id}/>
             })
           }
-        </div></div> : <div style={{fontSize: 50, color: 'white',paddingLeft: 50, paddingTop: 200}}>No hay artistas registrados          <div>
-            <button onClick={()=> navigate('/PanelAdmin/Artistas/Crear')} ><Award/>Agregar nuevo artista</button>
+        </div></div> : <div style={{fontSize: 50, color: 'white',paddingLeft: 50, paddingTop: 200}}>No genders registered         <div>
+            <button onClick={()=> navigate('/PanelAdmin/Artistas/Crear')} ><Award/>Add new gender</button>
           </div></div>
       }
     </div>

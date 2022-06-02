@@ -4,11 +4,11 @@ import './css/app.css'
 
 function Home() {
     return (
-        <div>
-            <video autoPlay loop muted id='video'>
-                <source src = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' type ='video/mp4'></source>
+        <section id="sect1" class="sect" >
+            <video className="video"display='flex' autoPlay loop muted id='video'>
+                <source src = '/videos/tomorrow.mp4' type ='video/mp4'></source>
             </video>
-        </div>
+        </section>
     );
 }
 

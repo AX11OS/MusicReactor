@@ -21,7 +21,7 @@ function Text() {
     })
   return <div>
           <animated.div style={styles}>
-              Artistas
+              Artists
           </animated.div>
       </div>
 }
@@ -100,10 +100,10 @@ function ArtistasConsultar() {
       {(artistas && artistas.length > 0)?<div>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           <div>
-            <button onClick={()=> navigate('/PanelAdmin/Artistas/Crear')} className='glow-on-hover' style = {{left: 1000}}><Award/>Agregar nuevo artista</button>
+            <button onClick={()=> navigate('/PanelAdmin/Artistas/Crear')} className='glow-on-hover' style = {{left: 1000}}><Award/>Add new artist</button>
           </div>
           <div>
-            <input type='text' placeholder="🔎 Buscar" value={searchValue} onChange={e => setSearchValue(e.target.value)} style={{backgroundColor: 'rgba(0,0,0,0.0)', color: 'white', fontSize: 30, right: 50,border: '0px solid black'}}></input>
+            <input type='text' placeholder="🔎 Search" value={searchValue} onChange={e => setSearchValue(e.target.value)} style={{backgroundColor: 'rgba(0,0,0,0.0)', color: 'white', fontSize: 30, right: 50,border: '0px solid black'}}></input>
           </div>
         </div>
         <div className="cards">
@@ -115,8 +115,8 @@ function ArtistasConsultar() {
               return <Card key = {k} nombre={i.nombre} logo = {i.logo} idartista ={i.id}/>
             })
           }
-        </div></div> : <div style={{fontSize: 50, color: 'white',paddingLeft: 50, paddingTop: 200}}>No hay artistas registrados          <div>
-            <button onClick={()=> navigate('/PanelAdmin/Artistas/Crear')} ><Award/>Agregar nuevo artista</button>
+        </div></div> : <div style={{fontSize: 50, color: 'white',paddingLeft: 50, paddingTop: 200}}>Nothing to showConfirmButton          <div>
+            <button onClick={()=> navigate('/PanelAdmin/Artistas/Crear')} ><Award/>Please, add new artist!</button>
           </div></div>
       }
     </div>

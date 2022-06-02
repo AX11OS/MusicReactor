@@ -14,7 +14,6 @@ export default function Client(){
     const [core, setCore] = useState([]);
     const [idx, setIndex] = useState(0);
     const [isPlay, setisPlay] = useState(false);
-
     const updatePlay=(newState)=>{
         setisPlay(newState);
     }

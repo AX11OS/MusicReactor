@@ -51,7 +51,7 @@ class PlaylistController extends Controller
             'albums.cover as cover',
             'albums.nombre as albumname',
             'songs.song as source')
-            ->where('playlists.favorite','=',0)
+            ->where('playlists.id_client','=',$request)
             ->orderBy('songs.name')
             ->get();
             return $playlist;
@@ -68,7 +68,13 @@ class PlaylistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            Playlist::create($request->post());
+            return response()->json(['res'=>'Added songs'],200);
+
+        }catch(\Exception $error){
+            return response()->json(['res'=>$error->getMessage()],500);
+        }
     }
 
     /**
@@ -111,8 +117,17 @@ class PlaylistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Playlist $playlist)
     {
-        //
+        try {
+            $playlist->delete();
+            return response()->json(['res'=> 'OK'],200);
+            
+        } catch (\Exception $error) {
+            return response()->json([
+                'res'=>'Híjole creo que no se va a poder'
+            ],401);
+        }
+    
     }
 }

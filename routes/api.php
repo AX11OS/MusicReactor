@@ -16,6 +16,7 @@ Route::resource('artistas', ArtistaController::class);
 Route::resource('albums', AlbumController::class);
 Route::resource('genders', GenderController::class);
 Route::resource('songs', SongsController::class);
+Route::resource('playlists', PlaylistController::class);
 //Consultas específicas
 Route::get('albumartista',[AlbumController::class, 'albumartista']);
 Route::get('allofsongs',[SongsController::class, 'allofsongs']);

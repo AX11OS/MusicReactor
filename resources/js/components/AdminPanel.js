@@ -1,6 +1,6 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
-import AdminNavBar from './AdminNavbar'
+import AdminNavBar2 from './AdminNavbar2'
 import ArtistasConsultar from './ArtistasConsultar';
 import ArtistasCrear from './ArtistasCrear';
 import ArtistasEditar from './ArtistasEditar';
@@ -18,7 +18,7 @@ export default function AdminPanel(){
     return(
         <div>
             <div>
-                <AdminNavBar/>
+                <AdminNavBar2/>
             </div>
             <video  className="videoBlur" autoPlay loop muted>
                 <source src="/videos/fondoAdmin.mp4" type="video/mp4"/>

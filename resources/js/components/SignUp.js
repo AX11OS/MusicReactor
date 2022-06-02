@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Form, Container, Row, Button, Navbar, Card, Nav, Table, InputGroup, Alert } from 'react-bootstrap';
+import NavBar from './Navbar';
 import { Link, useNavigate } from "react-router-dom";
 import Axios from 'axios';
 import logo from '/images/image2vector.svg';
@@ -37,7 +38,7 @@ const SignUp = () => {
         formD.append('name', data.name)
         formD.append('email', data.email)
         formD.append('password', data.password)
-
+        formD.append('access', 'no')
         await Axios({
             method: 'post',
             url: 'api/register',
@@ -52,8 +53,10 @@ const SignUp = () => {
                         text: "¡Welcome!",
                         icon: 'success',
                     });
-                    navigate('/Client/', { state: { token: response.data.token, email: data.email } });
+                    console.log(response.data.id);
                     console.log(response.data.token);
+          localStorage.setItem('_id',response.data.id)
+          navigate('/Client/', { state: {id: response.data.id, token: response.data.token, email: data.email } });
                 }
             })
             .catch(error => {
@@ -67,28 +70,7 @@ const SignUp = () => {
     return (
         <>
             <div>
-                <div><ReactNavbar.ReactNavbar
-                    color="rgb(25, 25, 25)"
-                    logo={logo}
-                    menu={[
-                        { name: "HOME", to: "/" },
-                        { name: "PLANS", to: "/#/HomePanel/planes" },
-                        { name: "LOGIN", to: "/#/Login" },
-                        { name: "SIGNUP", to: "/#/SignUp" },
-                    ]}
-                    social={[
-                        {
-                            name: "Facebook",
-                            url: "https://www.facebook.com",
-                            icon: ["fab", "facebook-f"],
-                        },
-                        {
-                            name: "Instagram",
-                            url: "https://www.instagram.com",
-                            icon: ["fab", "instagram"],
-                        },
-                    ]}
-                /></div>
+            <NavBar></NavBar>
                 <div className="abs-center">
                     <section className=" text-center text-lg-start bgimage-1">
                         <div className="container-fluid">

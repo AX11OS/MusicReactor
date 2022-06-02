@@ -1,39 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import * as ReactNavbar from "react-responsive-animate-navbar";
-import Home from './Home';
-import logo from '/images/image2vector.svg';
-import SignUp from './SignUp';
-function Navbar() {
+
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import './css/app.css';
+
+const AdminNavbar2 = () => {
+  
   return (
-    <ReactNavbar.ReactNavbar
-      color="rgb(25, 25, 25)"
-      logo={logo}
-      menu={[
-        { name: "HOME", to: "/"},
-          { name: "PLANS", to: "/#/HomePanel/planes" },
-          { name: "LOGIN", to: "/#/Login" },
-          { name: "SIGNUP", to: "/#/SignUp"},
-      ]}
-      social={[
-        {
-          name: "Facebook",
-          url: "https://www.facebook.com",
-          icon: ["fab", "facebook-f"],
-        },
-        {
-          name: "Instagram",
-          url: "https://www.instagram.com",
-          icon: ["fab", "instagram"],
-        },
-      ]}
-    />
+    <div>
+        <Navbar
+            collapseOnSelect
+            expand="lg"
+        >
+            <Container style={{ backgroundColor: "rgba(0,0,0,0.0)", color: 'white' }}>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                <Navbar.Brand href="/">
+                        <img height={100} width={100} src = {'./images/image2vector.svg'}/>
+                    </Navbar.Brand>
+                </Nav>
+
+                </Navbar.Collapse>
+                <Nav>
+                <Nav.Link href="/"><p className='botonCerrar'>ㅤㅤㅤHomeㅤㅤㅤ</p></Nav.Link>
+                  <Nav.Link href="#/Login/"><p className='botonCerrar'>ㅤㅤㅤLoginㅤㅤㅤ</p></Nav.Link>
+                  <Nav.Link href="#/SignUp/"><p className='botonCerrar'>ㅤㅤㅤSignUpㅤㅤㅤ</p></Nav.Link>
+                </Nav>
+            </Container>
+        </Navbar>
+    </div>
   );
-}
-
-export default Navbar;
-
-if (document.getElementById('navbar')) {
-  ReactDOM.render(<Navbar />, document.getElementById('navbar'));
-}
-
+};
+  
+export default AdminNavbar2;

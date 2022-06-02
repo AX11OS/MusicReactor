@@ -9,10 +9,8 @@ import countryList from 'react-select-country-list';
 import Select from 'react-select';
 import { FileUploader } from "react-drag-drop-files";
 import './css/botonchido.css';
-import { useAlert } from "react-alert";
-import AlertTemplate from 'react-alert-template-basic';
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 function Text() {
@@ -23,7 +21,7 @@ function Text() {
     })
   return <div>
           <animated.div style={styles}>
-              Agregar Artista
+              Add Artist
           </animated.div>
       </div>
 }
@@ -73,8 +71,8 @@ function ArtistasCrear() {
     e.preventDefault();
     if(nombre == '' || pais.label == '' || descripcion == '' || banda == null || logo == null){
       MySwal.fire(
-        'Campos incompletos',
-        'Requieres llenar todos los campos',
+        'Incomplete fields',
+        'You need to fill all fields',
         'question'
       )
       console.log("no");
@@ -109,7 +107,7 @@ function ArtistasCrear() {
           setValidationError(response.data.errors)
         }else{
           MySwal.fire({
-            title: 'Error al realizar la petición:' + response,
+            title: 'Error:' + response,
             width: 600,
             padding: '3em',
             color: '#FFF',
@@ -134,26 +132,26 @@ function ArtistasCrear() {
       <Form style={{flexDirection: 'row', display: 'flex'}} onSubmit={agregarArtista}>
         <div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="text" onChange={(e)=> setNombre(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Nombre del artista" />
+              <Form.Control type="text" onChange={(e)=> setNombre(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Artist Name" />
             </Form.Group>
 
             <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
-              <Select options={options} placeholder="País de orígen" styles={customStyles} value={pais}  onChange={changeHandler} />
+              <Select options={options} placeholder="Country" styles={customStyles} value={pais}  onChange={changeHandler} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control as="textarea" rows="3" value={descripcion} onChange={(e)=> setDescripcion(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center', height: 200, fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Reseña" />
+              <Form.Control as="textarea" rows="3" value={descripcion} onChange={(e)=> setDescripcion(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center', height: 200, fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Info" />
             </Form.Group>
         </div>
         <div style={{marginLeft: 20, alignContent: 'center'}}>
           <Form.Group className="mb-3">
-            <FileUploader label={"Imagen del artista"} hoverTitle ={'Soltar aquí'} handleChange={(file) => { setBanda(file), setURLBanda(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
+            <FileUploader label={"Artist Image"} hoverTitle ={'Soltar aquí'} handleChange={(file) => { setBanda(file), setURLBanda(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
           </Form.Group>
           <Form.Group>
             <img style={{width: 430, height:333, backgroundColor: 'rgba(0,0,0,0.7)', border:'2px solid white'}} src={URLbanda}></img>
           </Form.Group>
           <Button className='glow-on-hover' type="submit">
-              Guardar datos
+              Save Data
             </Button>
         </div>
         <div style={{marginLeft: 20}}>

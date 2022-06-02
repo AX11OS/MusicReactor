@@ -12,6 +12,6 @@ class Gender extends Model
     public $table = "genders";
     protected $fillable = [
         'id',
-        'name',
+        'Name',
     ];
 }
