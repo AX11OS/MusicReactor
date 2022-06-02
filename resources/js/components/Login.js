@@ -41,7 +41,7 @@ const Login = () => {
       method: 'post',
       url: 'api/login',
       data: toSend,
-      config: { headers: { 'Content-Type': 'multipart/form-data' } }
+      config: { headers: { 'Content-Type': 'xhr' } }
     })
       .then(response => {
         if (response.status == 200) {
@@ -50,7 +50,7 @@ const Login = () => {
             text: "You are already logged in!!",
             icon: 'success',
           });
-          navigate('/evmo/public/SeeAdmin', { state: { token: response.data.token, email: data.email } });
+          navigate('/', { state: { token: response.data.token, email: data.email } });
           console.log(response.data.token);
         }
       })
