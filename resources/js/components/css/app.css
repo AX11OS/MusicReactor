@@ -195,3 +195,20 @@ html{
     padding-top: 2rem;
     margin-top: 1.5rem;
 }
+.bgimage-1 {
+  background-image: url("https://wallpaperaccess.com/full/6235574.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.bgimage-2 {
+  background-image: url("https://c4.wallpaperflare.com/wallpaper/503/618/348/digital-digital-art-artwork-drawing-digital-painting-hd-wallpaper-preview.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.rgbaDark{
+  background-color: rgba(0, 0, 0, 0.85);
+}
