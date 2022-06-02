@@ -27,7 +27,7 @@ function Text() {
       </div>
 }
 
-function ArtistasCrear() {
+export default function SongsCreate() {
   const navigate = useNavigate();
   const [name, setName] = useState([]);
   const [id_artist, setId_artist] = useState('');
@@ -66,18 +66,18 @@ function ArtistasCrear() {
     await axios.get(url).then(({data})=>{
         if(data && data.length >0){
           data.map(i =>{
-            setGenres(old => [...old, {value: i.id, label: i.name}])
+            setGenres(old => [...old, {value: i.id, label: i.Name}])
           })
         }
     })
   }
   const loadData =async()=>{
-    var url = 'http://localhost:8000/api/loadAlbum/';
+    var url = 'http://localhost:8000/api/loadalbum/';
     await axios.get(url+id).then(({data})=>{
-      const {id_artist, artistname, albumname,cover} = data;
-      setId_artist(id_artist);
-      setArtist(artistname);
-      setAlbum(albumname);
+      const {banda, nombre, id_artista,cover} = data[0];
+      setId_artist(id_artista);
+      setArtist(banda);
+      setAlbum(nombre);
       setCover(cover);
     })
   }
@@ -92,6 +92,23 @@ function ArtistasCrear() {
       borderBottom: '1px dotted white',
       color: state.isSelected ? 'black' : 'white',
       backgroundColor: state.isSelected ? 'white' : 'black',
+      padding: 20,
+    }),
+    control: () => ({
+     placeholder: 'País de orígen'
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+      return { ...provided, opacity, transition };
+    }
+  }
+  const customStyles2 = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dotted white',
+      color: state.isSelected ? 'white' : 'black',
+      backgroundColor: state.isSelected ? 'black' : 'white',
       padding: 20,
     }),
     control: () => ({
@@ -125,29 +142,35 @@ function ArtistasCrear() {
       }
       console.log(dos)
     }
+    const updateName = (XD) =>{
+      const newState = [...name];
+      newState[index] = XD;
+      setName(newState);
+    }
 
     return(
-      <Form style={{alignContent:'center'}}>
+      <div style={{alignContent:'center'}}>
         <div style={{fontSize: 18}}>File {index+1} {files[index].name}</div>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-         <Form.Control  value={name[index]}  type="text" onChange={(e)=> {setName(datas=>({...datas,[index]: e.target.value})), console.log(e.target.value)}} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Song name" />
-        </Form.Group>
-        <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
-          <Select options={genres} placeholder="Song's genre" styles={customStyles} value={id_genre}  onChange={(value)=>{setId_genre(datas=>({...datas,[index]: e.target.value}))}} />
-        </Form.Group>
-        <Form.Group>
+        <div className="mb-3" controlId="formBasicEmail">
+         <input value={(name[index])? name[index] : ''}  type="text" onChange={(e)=> { updateName(e.target.value), console.log(e.target.value)}} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Song name" />
+        </div>
+        <div className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
+          <Select options={genres} placeholder="Song's genre" styles={customStyles2} value={(id_genre[index])? id_genre[index] : ''}  onChange={(value)=>{console.log(value), setId_genre(datas=>({...datas,[index]: value}))}} />
+        </div>
+        <div>
           <button className="glow-on-hover" disabled={dis} onClick={()=> back() }><FontAwesomeIcon icon={faBackward}/></button>{'    '} <button className="glow-on-hover" disabled={dos} onClick={()=> forward() }><FontAwesomeIcon icon={faForward}/></button>
-        </Form.Group>
-      </Form>
+        </div>
+      </div>
     )
   }
 
-  const addSongs = async (e) => {
-    e.preventDefault();
+
+  const addSongs = async () => {
+
     var continued = true;
     if(files && files.length>0){
       for(var x = 0; x < files.length;x++){
-        if(name[x] == '' || id_genre[x].value == null){
+        if(name[x] == '' || id_genre[x] == ''){
           MySwal.fire(
             'Incomplete fields',
             'You must fill all fields',
@@ -165,7 +188,8 @@ function ArtistasCrear() {
             formData.append('id_artist', id_artist)
             formData.append('id_album', id)
             formData.append('id_gender', id_genre[x].value)
-
+            console.log(files[x])
+            formData.append('song',files[x])
             var url = 'http://localhost:8000/api/songs';
             
             await axios.post(url, formData).then(({data})=>{
@@ -213,6 +237,7 @@ function ArtistasCrear() {
         }
       }
   }
+  
   return (
     <div style ={{flexDirection: 'row', displayMode: 'flex', top: 15, padding: 30}}>
       <div style={{fontSize: 50, color: 'white', zIndex:1, paddingTop: 25, paddingLeft: 250}}>
@@ -220,17 +245,19 @@ function ArtistasCrear() {
       </div>
       <Form style={{flexDirection: 'row', display: 'flex'}} onSubmit={()=> navigate('/Songs/')}>
         <div>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              {artist}
+            <Form.Group className="mb-3" style={{fontSize: 20, color: 'white'}} controlId="formBasicEmail">
+              Artist name: {artist}
             </Form.Group>
-              {album}
+            <Form.Group className="mb-3" style={{fontSize: 20, color: 'white'}} controlId="formBasicEmail">
+              Album: {album}
+            </Form.Group>
             <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
-              <img src={`./storage/albums/cover/${cover}`} style={{width: 100, height: 100}}/>
+              <img src={`./storage/albums/cover/${cover}`} style={{width: 300, height: 300}}/>
             </Form.Group>
         </div>
         <div style={{marginLeft: 20, alignContent: 'center'}}>
           <Form.Group className="mb-3">
-            <FileUploader label={"Files"} onTypeError={(err)=> launchMessage()} multiple={true} hoverTitle ={'Drop here'} handleChange={(file) => { setFiles(file), console.log(file), setModal(true)}} name="file" types={fileTypes} />
+            <FileUploader style={{width: 600, height: 600}}label={"Files"} onTypeError={(err)=> launchMessage()} multiple={true} hoverTitle ={'Drop here'} handleChange={(file) => { setFiles(file), console.log(file), setModal(true)}} name="file" types={fileTypes} />
           </Form.Group>
           <Button className='glow-on-hover' type="submit">
               Exit
@@ -249,10 +276,10 @@ function ArtistasCrear() {
           <DynamicForms/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={addSongs()}>
+          <Button variant="secondary" onClick={()=>addSongs()}>
             Save
           </Button>
-          <Button variant="primary">Understood</Button>
+          <Button variant="primary" onClick={()=> setModal(false)}>Cancel</Button>
         </Modal.Footer>
       </Modal>
     </div>
@@ -260,9 +287,4 @@ function ArtistasCrear() {
   );
 }
 
-export default ArtistasCrear;
-
-if (document.getElementById('artistascrear')) {
-    ReactDOM.render(<ArtistasCrear />, document.getElementById('artistascrear'));
-}
 

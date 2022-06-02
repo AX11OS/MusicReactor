@@ -6,17 +6,25 @@ import ClienteInicio from './ClienteInicio';
 import {Routes, Route} from 'react-router-dom';
 import ClientFavs from './ClientFavs';
 import ClientPlaylist from './ClientPlaylist';
+import Player from './Player';
 
 export default function Client(){
     const [core, setCore] = useState([]);
-    const [index, setIndex] = useState(0);
+    const [idx, setIndex] = useState(0);
+    const [isPlay, setisPlay] = useState(false);
 
+    const updatePlay=(newState)=>{
+        setisPlay(newState);
+    }
     const updateCore=( newCore )=>{
-        if(newCore.core!=core)
-            setCore(newCore.core);
-        if(newCore.index!=index)
-            setIndex(newCore.index)
-        console.log(newCore);
+        if(newCore!=core)
+            setCore(newCore);
+        console.log(core);
+    }
+    const updateIndex = (newIndex)=>{
+        if(newIndex!=idx)
+            setIndex(newIndex);
+        console.log(idx);
     }
 
     return(
@@ -34,17 +42,17 @@ export default function Client(){
                             <Route index element={<ClienteInicio/>}/>
                             <Route 
                                 path='/Favorites/'
-                                element={<ClientFavs updateCore = {updateCore} />}/>
+                                element={<ClientFavs updateCore = {updateCore}  />}/>
                             <Route 
                                 path='/Playlist/'
-                                element={<ClientPlaylist/>}/>
+                                element={<ClientPlaylist updateCore = {updateCore} updateIndex = {updateIndex} updatePlay={updatePlay} isPlay={isPlay}/>}/>
                         </Routes>
                     </div>
                 </div>
 
             </div>
-            <div style={{position: 'absolute', bottom:0, left: 0, right: 0, zIndex: 11}}>
-                <Reproductor core = {core} index = {index}/>
+            <div>
+                <Player core={core} idx={idx} updatePlay={updatePlay} isPlay={isPlay}/>
             </div>
         </div>
     );

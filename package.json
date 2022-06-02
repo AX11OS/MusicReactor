@@ -49,6 +49,7 @@
         "react-select-country-list": "^2.2.3",
         "react-simple-image-viewer": "^1.2.1",
         "react-spring": "^9.4.5",
+        "react-super-responsive-table": "^5.2.0",
         "react-transition-group": "^4.4.2",
         "styled-components": "^5.3.5",
         "sweetalert2": "^11.4.17",

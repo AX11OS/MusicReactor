@@ -26,6 +26,15 @@ class AlbumController extends Controller
         ->get();
         return $album;
     }
+    public function loadalbum($request){
+        $album = \DB::table('albums')
+        ->join('artistas', 'artistas.id','=','albums.id_artista')
+        ->select('artistas.nombre as banda', 'albums.*')
+        ->where('albums.id','=',$request)
+        ->get();
+        return $album;
+    }
+
     public function store(Request $request)
     {
         try{
@@ -71,9 +80,9 @@ class AlbumController extends Controller
         try {
 
             if($album->cover){
-                $exists = Storage::disk('public')->exists("album/cover/{$album->cover}");
+                $exists = Storage::disk('public')->exists("albums/cover/{$album->cover}");
                 if($exists){
-                    Storage::disk('public')->delete("album/cover/{$album->cover}");
+                    Storage::disk('public')->delete("albums/cover/{$album->cover}");
                 }
             }
             $album->delete();

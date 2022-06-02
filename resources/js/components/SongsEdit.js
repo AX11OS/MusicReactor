@@ -1,20 +1,19 @@
 import React,{useState, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { useSpring, animated } from 'react-spring';
-import {Award, Search} from 'react-bootstrap-icons';
-import {useNavigate,useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import Form from 'react-bootstrap/Form'
+import { Modal } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import countryList from 'react-select-country-list';
 import Select from 'react-select';
 import { FileUploader } from "react-drag-drop-files";
 import './css/botonchido.css';
-import { useAlert } from "react-alert";
-import AlertTemplate from 'react-alert-template-basic';
+import './css/app.css'
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faForward, faBackward} from '@fortawesome/free-solid-svg-icons'
 function Text() {
   const styles = useSpring({
       from: { opacity: "0" },
@@ -23,58 +22,70 @@ function Text() {
     })
   return <div>
           <animated.div style={styles}>
-              Agregar Artista
+              Add Songs
           </animated.div>
       </div>
 }
 
-function ArtistasEditar() {
+export default function SongsEdit() {
   const navigate = useNavigate();
-  const options = useMemo(() => countryList().getData(), [])
-  const [nombre, setNombre] = useState('');
-  const [descripcion, setDescripcion] = useState('');
-  const [logo, setLogo] = useState(null);
-  const [banda, setBanda] = useState(null);
-  const [pais, setPais] = useState('');
-  const [URLbanda, setURLBanda] = useState('./images/Splash1.png');
-  const [URLlogo, setURLlogo] = useState('./images/image2vector.svg');
-  const MySwal = withReactContent(Swal)
+  const [name, setName] = useState([]);
+  const [id_gender, setId_gender] = useState('');
+  const [files, setFiles] = useState();
   const { id } = useParams()
+  const MySwal = withReactContent(Swal)
+  const fileTypes = ["MP3"];
+  const [genres, setGenres] = useState([]);
+  const [artist, setArtist] =useState('');
+  const [album, setAlbum] = useState('');
+  const [cover, setCover] = useState('');
+  const [song, setSong] = useState('');
 
-  const changeHandler = value => {
-    setPais(value);
-    console.log(value);
+  const launchMessage=()=>{
+    MySwal.fire({
+      title: 'Incorret format. Only MP3',
+      width: 600,
+      padding: '3em',
+      color: '#FFF',
+      icon: 'error',
+      background: '#000000',
+      backdrop: `
+        rgba(125,0,0,0.3)
+        left top
+        no-repeat
+      `
+    })
   }
-  const inputProps = {
-      inputStyle: 'box',
-      labelStyle: 'stacked',
-      placeholder: 'Please select...'
-  };
-  const cargarArtista = async () =>{
-    const url = `http://localhost:8000/api/artistas/${id}`;
-      await axios.get(url).then(({data})=>{
-        const { nombre, 
-          pais, 
-          descripcion, 
-          banda, 
-          logo } = data.artista
-        setNombre(nombre)
-        setPais(pais)
-        setDescripcion(descripcion)
-        setURLBanda(`./storage/artistas/banda/${banda}`)
-        setURLlogo(`./storage/artistas/logo/${logo}`)
-      }).catch(({response:{data}})=>{
-        Swal.fire({
-          text:data.message,
-          icon:"error"
-        })
-      })
-    
+
+  const loadGenres = async()=>{
+    var url = 'http://localhost:8000/api/genders';
+    await axios.get(url).then(({data})=>{
+        if(data && data.length >0){
+          data.map(i =>{
+            setGenres(old => [...old, {value: i.id, label: i.Name}])
+          })
+        }
+    })
   }
-  const fileTypes = ["JPG", "PNG"];
+
+  const loadData =async()=>{
+    var url = 'http://localhost:8000/api/loadsong/';
+    await axios.get(url+id).then(({data})=>{
+      const {artist, album, name,cover, id_gender, song} = data[0];
+      setArtist(artist);
+      setAlbum(album);
+      setCover(cover);
+      setName(name);
+      setId_gender(id_gender);
+      setSong(song)
+    })
+  }
+
   useEffect(() => {
-    cargarArtista()
+    loadGenres(),
+    loadData()
   }, []);
+
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
@@ -93,120 +104,97 @@ function ArtistasEditar() {
     }
   }
 
-  const actualizarArtista = async (e) => {
+  const updateSongs = async (e) => {
     e.preventDefault();
-    if(nombre == '' || pais.label == '' || descripcion == ''){
+    if(name == '' || id_gender == ''){
       MySwal.fire(
-        'Campos incompletos',
-        'Requieres llenar todos los campos',
+        'Incomplete fields',
+        'You must fill all fields',
         'question'
       )
-      console.log("no");
     }else{
-      const formData = new FormData();
-      formData.append('_method', 'PATCH');
-      formData.append('nombre', nombre)
-      formData.append('pais', pais.label)
-      formData.append('descripcion', descripcion)
-      if(banda!= null) formData.append('banda', banda)
-      if(logo!=null) formData.append('logo', logo)
+        const formData = new FormData();
+        formData.append('_method', 'PATCH');
+        formData.append('name', name);
+        formData.append('id_gender', id_gender.value)
+        if(files!= null) formData.append('song',files)
 
-      var url =`http://localhost:8000/api/artistas/${id}`;
-      
-      await axios.post(url, formData).then(({data})=>{
-        MySwal.fire({
-          title: 'Éxito al actualizar',
-          width: 600,
-          padding: '3em',
-          color: '#FFF',
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 1500,
-          background: '#000000',
-          backdrop: `
-            rgba(0,125,0,0.3)
-            left top
-            no-repeat
-          `
-        })
-        navigate('/PanelAdmin/Artistas/');
-      }).catch(({response})=>{
-        if(response.status===422){
-          setValidationError(response.data.errors)
-        }else{
+        var url = `http://localhost:8000/api/songs/${id}`;
+        await axios.post(url, formData).then(({data})=>{
           MySwal.fire({
-            title: 'Error al realizar la petición:' + response.data,
+            title: 'Correctly updated!',
             width: 600,
             padding: '3em',
             color: '#FFF',
-            icon: 'error',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500,
             background: '#000000',
             backdrop: `
-              rgba(125,0,0,0.3)
+              rgba(0,125,0,0.3)
               left top
               no-repeat
             `
           })
-        }
-      })
-    }
+          navigate('/PanelAdmin/Songs/');
+        }).catch(({response})=>{
+          if(response.status===422){
+            setValidationError(response.data.errors)
+          }else{
+            MySwal.fire({
+              title: 'Error while updating songs.',
+              width: 600,
+              padding: '3em',
+              color: '#FFF',
+              icon: 'error',
+              background: '#000000',
+              backdrop: `
+                rgba(125,0,0,0.3)
+                left top
+                no-repeat
+              `
+            })
+          }
+        })
+      }
+
 
   }
+  
   return (
     <div style ={{flexDirection: 'row', displayMode: 'flex', top: 15, padding: 30}}>
       <div style={{fontSize: 50, color: 'white', zIndex:1, paddingTop: 25, paddingLeft: 250}}>
         <Text/>
       </div>
-      <Form style={{flexDirection: 'row', display: 'flex'}} onSubmit={actualizarArtista}>
+      <Form style={{flexDirection: 'row', display: 'flex'}} onSubmit={updateSongs}>
         <div>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="text" value={nombre} onChange={(e)=> setNombre(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Nombre del artista" />
+            <Form.Group className="mb-3" style={{fontSize: 20, color: 'white'}} controlId="formBasicEmail">
+              Artist name: {artist}
             </Form.Group>
-
+            <Form.Group className="mb-3" style={{fontSize: 20, color: 'white'}} controlId="formBasicEmail">
+              Album: {album}
+            </Form.Group>
             <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
-              <Select options={options} placeholder="País de orígen" styles={customStyles} value={pais}  onChange={changeHandler} />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control as="textarea" rows="3" value={descripcion} onChange={(e)=> setDescripcion(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center', height: 200, fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Reseña" />
+              <img src={`./storage/albums/cover/${cover}`} style={{width: 300, height: 300}}/>
             </Form.Group>
         </div>
         <div style={{marginLeft: 20, alignContent: 'center'}}>
-          <Form.Group className="mb-3">
-            <FileUploader label={"Imagen del artista"} hoverTitle ={'Soltar aquí'} handleChange={(file) => { setBanda(file), setURLBanda(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Control type="text" value={name} onChange={(e)=> setName(e.target.value)} style ={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} placeholder="Song Name" />
           </Form.Group>
-          <Form.Group>
-            <img style={{width: 430, height:333, backgroundColor: 'rgba(0,0,0,0.7)', border:'2px solid white'}} src={URLbanda}></img>
+          <Form.Group className="mb-3">
+            <FileUploader style={{width: 600, height: 600}} label={"Optional to load another file"} onTypeError={(err)=> launchMessage()}  hoverTitle ={'Drop here'} handleChange={(file) => { setFiles(file), console.log(file)}} name="file" types={fileTypes} />
+          </Form.Group>
+          <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
+              <Select options={genres} placeholder="Select the gender" styles={customStyles} defaultValue={id_gender}  onChange={(value)=> {{setId_gender(value), console.log(id_gender.value)}}} />
           </Form.Group>
           <Button className='glow-on-hover' type="submit">
-              Guardar datos
-            </Button>
+              Save update
+          </Button>
         </div>
-        <div style={{marginLeft: 20}}>
-          <Form.Group className="mb-3">
-            <FileUploader label={"Logo del artista"} hoverTitle ={'Soltar aquí'} handleChange={(file) =>  {setLogo(file), setURLlogo(URL.createObjectURL(file)),console.log(file)}} name="file" types={fileTypes} />
-          </Form.Group>
-          <Form.Group>
-            <img style={{width: 333, height:333, backgroundColor: 'rgba(0,0,0,0.7)', border:'2px solid white'}} src={URLlogo}></img>
-          </Form.Group>
-        </div>
-
       </Form>
-
-      <div>
-
-      </div>
-      <div>
-
-      </div>
     </div>
 
   );
-}
-
-export default ArtistasEditar;
-
-if (document.getElementById('artistaseditar')) {
-    ReactDOM.render(<ArtistasEditar />, document.getElementById('artistaseditar'));
 }
 

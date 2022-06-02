@@ -28,7 +28,13 @@ class SongsController extends Controller
         ->join('artistas', 'artistas.id','=','songs.id_artist')
         ->join('albums', 'albums.id','=','songs.id_album')
         ->join('genders', 'genders.id','=','songs.id_gender')
-        ->select('artistas.*', 'albums.*', 'genders.*')
+        ->select('artistas.nombre as artistname',
+        'songs.name as songname',
+        'songs.id as idsong',
+        'albums.id as idalbum',
+         'albums.nombre as albumname', 
+         'genders.name as gendername',
+         'albums.cover as cover')
         ->get();
         return $songs;
     }
@@ -50,7 +56,15 @@ class SongsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $songname = Str::random().'.'.$request->song->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('songs/audio', $request->song,$songname);
+            Song::create($request->post()+['song'=>$songname]);
+            return response()->json(['res'=>'Added songs'],200);
+
+        }catch(\Exception $error){
+            return response()->json(['res'=>$error->getMessage()],500);
+        }
     }
 
     /**
@@ -82,19 +96,59 @@ class SongsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Song $song)
     {
-        //
+        try{
+            $song->fill($request->post())->update();
+            if($request->hasFile('song')){
+                if($song->song){
+                    $exists = Storage::disk('public')->exists("songs/audio/{$song->song}");
+                    if($exists){
+                        Storage::disk('public')->delete("songs/audio/{$song->song}");
+                    }
+                }
+                $imagennombre = Str::random().'.'.$request->song->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('songs/audio', $request->song,$imagennombre);
+                $song->song = $imagennombre;
+            }
+            $song->save();
+            return response()->json(['res'=>'Actualizado']);
+        }catch(\Exception $error){
+            return response()->json(['res'=>'Errormáster '.$error->message],500);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function loadsong($request){
+        $album = \DB::table('songs')
+        ->join('albums', 'albums.id','=','songs.id_album')
+        ->join('artistas', 'artistas.id','=','songs.id_artist')
+        ->select('artistas.nombre as artist', 
+        'albums.nombre as album',
+        'songs.*',
+        'albums.cover as cover')
+        ->where('songs.id','=',$request)
+        ->get();
+        return $album;
+    }
+
+
+    public function destroy(Song $song)
     {
-        //
+        try {
+
+            if($song->song){
+                $exists = Storage::disk('public')->exists("songs/audio/{$song->song}");
+                if($exists){
+                    Storage::disk('public')->delete("songs/audio/{$song->song}");
+                }
+            }
+            $song->delete();
+            return response()->json(['res'=> 'OK'],200);
+            
+        } catch (\Exception $error) {
+            return response()->json([
+                'res'=>'Híjole creo que no se va a poder'
+            ],401);
+        }
     }
 }

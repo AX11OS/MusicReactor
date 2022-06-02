@@ -12,14 +12,14 @@ class Song extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
     public $timestamps = false;
-    public $table = "artists";
+    public $table = "songs";
     protected $fillable = [
         'id',
         'name',
         'id_artist',
         'id_album',
         'id_gender',
-        'duration'
+        'song'
     ];
 
     protected $casts = [

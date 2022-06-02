@@ -8,6 +8,12 @@ import GendersConsultar from './GendersConsultar';
 import GendersCrear from './GendersCrear';
 import GendersEditar from './GendersEditar';
 import SongsCreate from './SongsCreate';
+import SongsQuery from './SongsQuery';
+import SongsEdit from './SongsEdit';
+import AlbumsConsultar from './AlbumsConsultar';
+import AlbumsCrear from './AlbumsCrear';
+import AlbumsEditar from './AlbumsEditar';
+
 export default function AdminPanel(){
     return(
         <div>
@@ -32,6 +38,18 @@ export default function AdminPanel(){
                         element={<ArtistasEditar/>}
                     />
                     <Route
+                        path='/Albums'
+                        element={<AlbumsConsultar/>}
+                    />
+                    <Route
+                        path='/Albums/Crear'
+                        element={<AlbumsCrear/>}
+                    />
+                    <Route
+                        path='/Albums/Editar/:id'
+                        element={<AlbumsEditar/>}
+                    />
+                    <Route
                         path='/Genders'
                         element={<GendersConsultar/>}
                     />
@@ -44,16 +62,16 @@ export default function AdminPanel(){
                         element={<GendersEditar/>}
                     />
                     <Route
-                        path='/Genders'
-                        element={<GendersConsultar/>}
+                        path='/Songs'
+                        element={<SongsQuery/>}
                     />
                     <Route
-                        path='/Songs/Create'
+                        path='/Songs/Create/:id'
                         element={<SongsCreate/>}
                     />
                     <Route
-                        path='/Genders/Editar/:id'
-                        element={<GendersEditar/>}
+                        path='/Songs/Edit/:id'
+                        element={<SongsEdit/>}
                     />
                 </Routes>
             </div>

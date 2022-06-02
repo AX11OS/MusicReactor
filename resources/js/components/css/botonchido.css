@@ -13,7 +13,12 @@
     z-index: 0;
     border-radius: 10px;
 }
-
+.bars{
+  background: linear-gradient(45deg, #000000, #400068, #00025a, #6e007f, #00352c, #000d4c, #cb27d0, #009dff, #500000);
+  background-size: 400%;
+  animation: glowing 20s linear infinite;
+  transition: opacity .3s ease-in-out;
+}
 .glow-on-hover:before {
     content: '';
     background: linear-gradient(45deg, #000000, #400068, #00025a, #6e007f, #00352c, #000d4c, #cb27d0, #009dff, #500000);

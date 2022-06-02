@@ -44,7 +44,7 @@ export default function AlbumsEditar() {
   }, []);
 
   const cargarAlbum = async () =>{
-    const url = `http://localhost:8000/api/albums/cover/${id}`;
+    const url = `http://localhost:8000/api/albums/${id}`;
       await axios.get(url).then(({data})=>{
         const { nombre, 
           anio, 
@@ -53,7 +53,7 @@ export default function AlbumsEditar() {
           console.log(nombre);
         setNombre(nombre)
         setAnio(anio)
-        setURLcover(`./storage/albums/${cover}`)
+        setURLcover(`./storage/albums/cover/${cover}`)
         setidBanda(id_artista)
       }).catch(({response:{data}})=>{
         Swal.fire({
@@ -114,7 +114,7 @@ export default function AlbumsEditar() {
 
   const agregarAlbum = async (e) => {
     e.preventDefault();
-    if(nombre == '' || idBanda == '' || anio == '' || cover == null){
+    if(nombre == '' || idBanda == '' || anio == ''){
       MySwal.fire(
         'Incomplete Fields',
         'You must to fill all fields',
@@ -124,11 +124,12 @@ export default function AlbumsEditar() {
     }else{
       const formData = new FormData();
       console.log(idBanda.label)
+      formData.append('_method', 'PATCH');
       formData.append('nombre', nombre)
-      formData.append('cover', cover)
+      if(cover!=null )formData.append('cover', cover)
       formData.append('anio', anio.value)
       formData.append('id_artista', idBanda.value)
-      var url = 'http://localhost:8000/api/albums';
+      var url = `http://localhost:8000/api/albums/${id}`;
       
       await axios.post(url, formData).then(({data})=>{
         MySwal.fire({
@@ -181,11 +182,11 @@ export default function AlbumsEditar() {
             </Form.Group>
 
             <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
-              <Select options={options} placeholder="Related artist" styles={customStyles} value={idBanda}  onChange={changeHandler} />
+              <Select options={options} placeholder="Related artist" styles={customStyles} defaultValue={idBanda}  onChange={changeHandler} />
             </Form.Group>
 
             <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
-              <Select options={years} placeholder="Year" styles={customStyles2} value={anio}  onChange={(value)=> setAnio(value)} />
+              <Select options={years} placeholder="Year" styles={customStyles2} defaultValue={anio}  onChange={(value)=> setAnio(value)} />
             </Form.Group>
             <Button className='glow-on-hover' type="submit">
               Guardar datos
