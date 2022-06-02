@@ -14,6 +14,7 @@ function Navbar() {
           { name: "Artistas", to: "#/PanelAdmin/Artistas/", },
           { name: "Álbumes", to: "#/PanelAdmin/Albums/", component: AlbumsConsultar },
           { name: "Canciones", to: "#/PanelAdmin/Canciones/" },
+          { name: "Logout", to: "#/LogIn/Login" },
         ]}
         social={[
         ]}
