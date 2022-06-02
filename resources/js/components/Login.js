@@ -4,8 +4,9 @@ import { Form, Container, Row, Button, Navbar, Col, Nav, Image, ButtonGroup, Ale
 import { Link, useNavigate } from "react-router-dom";
 import Axios from 'axios';
 import swal from 'sweetalert';
+import * as ReactNavbar from "react-responsive-animate-navbar";
+import logo from '/images/image2vector.svg';
 import './css/app.css'
-
 const Login = () => {
 
   let navigate = useNavigate();
@@ -50,7 +51,7 @@ const Login = () => {
             text: "You are already logged in!!",
             icon: 'success',
           });
-          navigate('/', { state: { token: response.data.token, email: data.email } });
+          navigate('/Client/', { state: { token: response.data.token, email: data.email } });
           console.log(response.data.token);
         }
       })
@@ -65,12 +66,33 @@ const Login = () => {
   return (
     <>
       <div>
-        {/* Colocar Navbar Aqui */}
-        <div className="abs-center">
+        <div><ReactNavbar.ReactNavbar
+        color="rgb(25, 25, 25)"
+        logo={logo}
+        menu={[
+          { name: "HOME", to: "/"},
+          { name: "PLANS", to: "/#/HomePanel/planes" },
+          { name: "LOGIN", to: "/#/Login" },
+          { name: "SIGNUP", to: "/#/SignUp"},
+        ]}
+        social={[
+          {
+            name: "Facebook",
+            url: "https://www.facebook.com",
+            icon: ["fab", "facebook-f"],
+          },
+          {
+            name: "Instagram",
+            url: "https://www.instagram.com",
+            icon: ["fab", "instagram"],
+          },
+        ]}
+      /></div>
+        <div>
           <section className=" text-center text-lg-start bgimage-1">
             <div className="container-fluid">
-              <div className='row'>
-                <div className='col-xs-12 col-md-8 col-lg-6 rgbaDark'>
+              <div className='row '>
+                <div className='col-xs-12 col-md-8 col-lg-6 rgbaDark mt-5'>
                   <div className='col-center'>
                     <Form>
                       <h3>

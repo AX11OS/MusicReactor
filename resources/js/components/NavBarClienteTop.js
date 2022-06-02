@@ -24,7 +24,7 @@ const NavBarClienteTop = () => {
 
                 </Navbar.Collapse>
                 <Nav>
-                    <Nav.Link href="#/LogIn/Login"><p className='botonCerrar'>Cerrar Sesión</p></Nav.Link>
+                    <Nav.Link href="#/LogIn/Login"><p className='botonCerrar'>ㅤㅤㅤLogoutㅤㅤㅤ</p></Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

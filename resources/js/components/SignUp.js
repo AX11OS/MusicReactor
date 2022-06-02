@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Form, Container, Row, Button, Navbar, Card, Nav, Table, InputGroup, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import Axios from 'axios';
+import logo from '/images/image2vector.svg';
+import * as ReactNavbar from "react-responsive-animate-navbar";
 
 const SignUp = () => {
 
@@ -25,7 +27,7 @@ const SignUp = () => {
         e.preventDefault();
         if (data.name == "" || data.email == "" || data.password == "") {
             swal({
-                title: "Register Admin",
+                title: "Warning",
                 text: "The fields are empty, please verify and enter your credentials.",
                 icon: 'warning',
             });
@@ -50,14 +52,14 @@ const SignUp = () => {
                         text: "¡Welcome!",
                         icon: 'success',
                     });
-                    /* navigate('/evmo/public/SeeAdmin', { state: { token: response.data.token, email: data.email } }); */
+                    navigate('/Client/', { state: { token: response.data.token, email: data.email } });
                     console.log(response.data.token);
                 }
             })
             .catch(error => {
                 swal({
                     title: "Error",
-                    text: "The credentials are incorrect or this user has already been registered, please verify and try again.",
+                    text: "The credentials are incorrect. This user has already been registered. Password too short, must be at least 8 characters, The name requiret min 4 characters.",
                     icon: 'error',
                 });
             })
@@ -65,12 +67,33 @@ const SignUp = () => {
     return (
         <>
             <div>
-                {/* Colocar Navbar Aqui */}
+                <div><ReactNavbar.ReactNavbar
+                    color="rgb(25, 25, 25)"
+                    logo={logo}
+                    menu={[
+                        { name: "HOME", to: "/" },
+                        { name: "PLANS", to: "/#/HomePanel/planes" },
+                        { name: "LOGIN", to: "/#/Login" },
+                        { name: "SIGNUP", to: "/#/SignUp" },
+                    ]}
+                    social={[
+                        {
+                            name: "Facebook",
+                            url: "https://www.facebook.com",
+                            icon: ["fab", "facebook-f"],
+                        },
+                        {
+                            name: "Instagram",
+                            url: "https://www.instagram.com",
+                            icon: ["fab", "instagram"],
+                        },
+                    ]}
+                /></div>
                 <div className="abs-center">
                     <section className=" text-center text-lg-start bgimage-1">
                         <div className="container-fluid">
                             <div className='row'>
-                                <div className='col-xs-12 col-md-8 col-lg-6 rgbaDark'>
+                                <div className='col-xs-12 col-md-8 col-lg-6 rgbaDark mt-5'>
                                     <div className='col-center'>
                                         <Form>
                                             <h3>
