@@ -135,7 +135,7 @@ export default function AlbumsConsultar() {
             <button onClick={()=> navigate('/PanelAdmin/Albums/Crear')} className='glow-on-hover' style = {{left: 1100}}><Award/>Agregar nuevo album</button>
           </div>
           <div>
-            <input type='text' placeholder="🔎 Buscar" value={searchValue} onChange={e => setSearchValue(e.target.value)} style={{backgroundColor: 'rgba(0,0,0,0.0)', color: 'white', fontSize: 30, right: 50,border: '0px solid black'}}></input>
+            <input type='text' placeholder="🔎 Search" value={searchValue} onChange={e => setSearchValue(e.target.value)} style={{backgroundColor: 'rgba(0,0,0,0.0)', color: 'white', fontSize: 30, right: 50,border: '0px solid black'}}></input>
           </div>
           <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
               <Select options={options} placeholder="Search by artist" styles={customStyles} value={bandaValue}  onChange={(value)=> {{setBandaValue(value), console.log(bandaValue.value)}}} />

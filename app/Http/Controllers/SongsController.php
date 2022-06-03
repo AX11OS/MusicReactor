@@ -78,13 +78,11 @@ class SongsController extends Controller
 
     public function loadfromartist($request){
         try{
-            $songs = \DB::table('playlists')
-            ->join('songs', 'songs.id','=','playlists.id_song')
+            $songs = \DB::table('songs')
             ->join('artistas', 'artistas.id','=','songs.id_artist')
             ->join('albums', 'albums.id','=','songs.id_album')
             ->select('artistas.nombre as artist', 
             'albums.id as idalbum',
-            'playlists.id as idplay',
             'songs.name as name', 
             'albums.cover as cover',
             'albums.nombre as albumname',

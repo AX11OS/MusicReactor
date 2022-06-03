@@ -110,10 +110,7 @@ export default function Player({idx, core, updatePlay, isPlay, updateIndex}){
                 player.current.pause();
                 console.log("Pausa!")
             }
-
-
         }
-
     }
     return(
         <div style={{backgroundColor: 'black', width: '100wv', heigth: 190}}>

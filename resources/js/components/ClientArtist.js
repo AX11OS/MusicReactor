@@ -87,6 +87,7 @@ export default function ClientArtist({updateCore, updateIndex, updatePlay, isPla
       const loadSongs = async () => {
         var url = 'http://localhost:8000/api/loadfromartist/'+id;
         await axios.get(url).then(({data})=>{
+          console.log(data)
             setSongs(data)
         })
       }
@@ -96,6 +97,7 @@ export default function ClientArtist({updateCore, updateIndex, updatePlay, isPla
             setAlbums(data)
             if(data && data.length >0){
               data.map(i =>{
+                console.log(data.id)
                 setOptions(old => [...old, {value: i.id, label: <div><img src={`./storage/albums/cover/${i.cover}`} style={{width: 50, left: 5,height: 50, borderRadius: 50}}/>{i.nombre} </div>}])
               })
             }
@@ -115,7 +117,7 @@ export default function ClientArtist({updateCore, updateIndex, updatePlay, isPla
               
             </div>
             <div style={{fontSize: 30, color: 'white', paddingLeft: 20}}>
-                {(songs.length>0 && songs)? <div><Recomendar/>
+                {(albums.length>0 && albums)? <div><Recomendar/>
                 <>
                 <Form.Group className="mb-3" style={{backgroundColor: 'rgba(0,0,0,0.8)', width: 430,padding: 10,textAlign: 'center',fontFamily: 'Bahnschrift',fontSize: 23, color: 'white', border: '2px solid white'}} controlId="formBasicPassword">
                   <Select options={options} placeholder="Search by album" styles={customStyles} defaultValue={selectedAlbum}  onChange={(value)=> setSelectedAlbum(value)} />

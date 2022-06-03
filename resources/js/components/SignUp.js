@@ -55,8 +55,8 @@ const SignUp = () => {
                     });
                     console.log(response.data.id);
                     console.log(response.data.token);
-          localStorage.setItem('_id',response.data.id)
-          navigate('/Client/', { state: {id: response.data.id, token: response.data.token, email: data.email } });
+                    localStorage.setItem('_id',response.data.id)
+          navigate('/Client/');
                 }
             })
             .catch(error => {
